@@ -67,7 +67,17 @@
   - Verified successful build (12 routes generated)
 
 ## Phase 2: Data Layer & Product Catalog
-- [ ] Design Database Schema (Products, Orders, Profiles) <!-- id: 9 -->
+- [x] Design Database Schema (Products, Orders, Profiles) <!-- id: 9 -->
+  - Designed 5-table schema: profiles, products, product_variants, orders, order_items
+  - All tables use Supabase/Postgres conventions (UUIDs, timestamptz, proper foreign keys)
+  - Supports product browsing with variants (size, skin type)
+  - Supports guest checkout (orders.user_id nullable)
+  - Preserves historical data (denormalized product names and prices in order_items)
+  - Currency stored in cents (integer) to avoid floating-point issues
+  - Soft deletes via is_active flags
+  - Created comprehensive documentation: docs/database-schema.md
+  - Schema includes relationships, indexes, design rationale, and explicit exclusions
+  - Verified internal consistency and alignment with architecture.md
 - [ ] Create Seed Script for "Calm Form" Products <!-- id: 10 -->
 - [ ] Implement Server-Side Product Fetching <!-- id: 11 -->
 - [ ] Build Product Listing Page (PLP) <!-- id: 12 -->
