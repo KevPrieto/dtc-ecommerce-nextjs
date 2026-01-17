@@ -44,7 +44,14 @@
   - Created placeholder pages for each route group to verify layouts
   - Structural HTML only - no design, no content, no navigation logic
   - Verified successful build (8 routes generated)
-- [ ] Build Core UI Components (Buttons, Inputs, Cards) <!-- id: 7 -->
+- [x] Build Core UI Components (Buttons, Inputs, Cards) <!-- id: 7 -->
+  - Created Button component with shadcn/ui patterns and variants (default, destructive, outline, secondary, ghost, link)
+  - Created Input component with focus states and accessibility features
+  - Created Card component with subcomponents (CardHeader, CardTitle, CardDescription, CardContent, CardFooter)
+  - All components use existing theme variables (no custom colors or styles)
+  - Installed dependencies: @radix-ui/react-slot, class-variance-authority
+  - Components are generic and reusable (no product-specific logic)
+  - Verified successful build
 - [ ] Build Header & Footer (Responsive) <!-- id: 8 -->
 
 ## Phase 2: Data Layer & Product Catalog
