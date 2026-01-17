@@ -17,7 +17,12 @@
   - Installed tailwindcss-animate plugin
   - Updated globals.css with shadcn theme variables and base styles
   - Verified successful build
-- [ ] Set up Supabase Project & Environment Variables <!-- id: 4 -->
+- [x] Set up Supabase Project & Environment Variables <!-- id: 4 -->
+  - Installed @supabase/supabase-js and @supabase/ssr packages
+  - Created lib/supabase/server.ts with SSR-compatible server client
+  - Created lib/supabase/client.ts with browser client
+  - Created .env.local.example with Supabase and Stripe variable templates
+  - Verified successful build
 
 ## Phase 1: Core Components & Design System
 - [ ] Define Typography & Color Palette (Calm, Premium, Minimal) <!-- id: 5 -->
