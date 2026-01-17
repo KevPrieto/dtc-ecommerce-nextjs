@@ -52,7 +52,19 @@
   - Installed dependencies: @radix-ui/react-slot, class-variance-authority
   - Components are generic and reusable (no product-specific logic)
   - Verified successful build
-- [ ] Build Header & Footer (Responsive) <!-- id: 8 -->
+- [x] Build Header & Footer (Responsive) <!-- id: 8 -->
+  - Created Header component: Brand name "CALM FORM", navigation (Shop, About), account/cart icons
+  - Created Footer component: Brand name, descriptor "Clean skincare essentials", links (Shipping, Privacy, Terms), copyright
+  - Created CheckoutHeader component: Minimal logo-only header for distraction-free checkout
+  - Mobile-first responsive design: Navigation moves below header on mobile
+  - Installed lucide-react for icons (User, ShoppingBag)
+  - Updated ShopLayout to use Header and Footer
+  - Updated AccountLayout to use Header
+  - Updated CheckoutLayout to use CheckoutHeader
+  - Created placeholder pages: /about, /shipping, /privacy, /terms
+  - All components use Server Components (default)
+  - Uses existing typography and color tokens only (no custom styling)
+  - Verified successful build (12 routes generated)
 
 ## Phase 2: Data Layer & Product Catalog
 - [ ] Design Database Schema (Products, Orders, Profiles) <!-- id: 9 -->

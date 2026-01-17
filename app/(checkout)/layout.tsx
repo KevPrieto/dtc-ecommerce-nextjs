@@ -1,3 +1,5 @@
+import { CheckoutHeader } from "@/components/layout/checkout-header";
+
 export default function CheckoutLayout({
   children,
 }: {
@@ -5,11 +7,7 @@ export default function CheckoutLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4">
-          {/* Minimal header - logo only */}
-        </div>
-      </header>
+      <CheckoutHeader />
       <main className="flex-1">{children}</main>
     </div>
   );
