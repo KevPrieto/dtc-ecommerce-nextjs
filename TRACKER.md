@@ -25,7 +25,16 @@
   - Verified successful build
 
 ## Phase 1: Core Components & Design System
-- [ ] Define Typography & Color Palette (Calm, Premium, Minimal) <!-- id: 5 -->
+- [x] Define Typography & Color Palette (Calm, Premium, Minimal) <!-- id: 5 -->
+  - Typography: Defined clear hierarchy (H1-H4, body, small) with negative letter spacing for premium feel
+  - Font sizes: xs(12px) to 5xl(48px) with optimized line heights for readability
+  - Font weights: normal(400), medium(500), semibold(600) for minimal hierarchy
+  - Color palette: Neutral base (white, warm off-white, grays, near-black)
+  - Accent color: Subtle sage green (hsl 150 12% 42%) for clinical skincare aesthetic
+  - Ring/focus color: Sage green for consistent interactive states
+  - Border radius: Minimal (0.375rem) for clean, modern look
+  - Added base typography styles in globals.css
+  - Verified successful build
 - [ ] Implement Layouts (RootLayout, ShopLayout, AuthLayout) <!-- id: 6 -->
 - [ ] Build Core UI Components (Buttons, Inputs, Cards) <!-- id: 7 -->
 - [ ] Build Header & Footer (Responsive) <!-- id: 8 -->

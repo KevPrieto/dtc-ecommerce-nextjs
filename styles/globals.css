@@ -4,26 +4,43 @@
 
 @layer base {
   :root {
+    /* Neutral base - clean, minimal, clinical */
     --background: 0 0% 100%;
     --foreground: 0 0% 9%;
+
+    /* Card/Surface colors */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
+
+    /* Primary - near black for text and CTA */
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
+
+    /* Secondary - warm off-white */
+    --secondary: 30 10% 97%;
     --secondary-foreground: 0 0% 9%;
+
+    /* Muted - light neutrals */
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84% 60%;
+
+    /* Accent - subtle sage green (clinical, calm) */
+    --accent: 150 12% 42%;
+    --accent-foreground: 0 0% 98%;
+
+    /* Destructive - muted red */
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 9%;
-    --radius: 0.5rem;
+
+    /* Borders and inputs - soft gray */
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 150 12% 42%;
+
+    /* Border radius - minimal */
+    --radius: 0.375rem;
   }
 }
 
@@ -31,8 +48,34 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Typography hierarchy - minimal, readable, calm */
+  h1 {
+    @apply text-4xl font-semibold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+
+  h4 {
+    @apply text-xl font-medium tracking-tight;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+  }
+
+  small {
+    @apply text-sm text-muted-foreground;
   }
 }
