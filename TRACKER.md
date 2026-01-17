@@ -9,7 +9,14 @@
   - Set up folder structure per architecture.md: app/(auth|shop|checkout|account), components/{ui,shop,layout,account}, lib/{supabase,stripe}, types
   - Created root layout, landing page, and cn() utility
   - Verified successful build
-- [ ] Configure Tailwind, Fonts, and shadcn/ui base <!-- id: 3 -->
+- [x] Configure Tailwind, Fonts, and shadcn/ui base <!-- id: 3 -->
+  - Configured shadcn/ui with components.json (new-york style, neutral base color)
+  - Set up Tailwind theme with CSS variables for premium minimal aesthetic
+  - Configured color palette: neutral grays and whites for clean skincare brand
+  - Added system font stack (San Francisco, Segoe UI, Roboto) for optimal performance
+  - Installed tailwindcss-animate plugin
+  - Updated globals.css with shadcn theme variables and base styles
+  - Verified successful build
 - [ ] Set up Supabase Project & Environment Variables <!-- id: 4 -->
 
 ## Phase 1: Core Components & Design System
