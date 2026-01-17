@@ -3,7 +3,12 @@
 ## Phase 0: Foundations & Architecture
 - [x] Analyze PRD and defined constraints <!-- id: 0 -->
 - [x] Design Repository Structure & Architecture (Deliverable: docs/architecture.md) <!-- id: 1 -->
-- [ ] Initialize Next.js App (Clean Install) <!-- id: 2 -->
+- [x] Initialize Next.js App (Clean Install) <!-- id: 2 -->
+  - Created Next.js 15 project with TypeScript and App Router
+  - Configured Tailwind CSS with PostCSS
+  - Set up folder structure per architecture.md: app/(auth|shop|checkout|account), components/{ui,shop,layout,account}, lib/{supabase,stripe}, types
+  - Created root layout, landing page, and cn() utility
+  - Verified successful build
 - [ ] Configure Tailwind, Fonts, and shadcn/ui base <!-- id: 3 -->
 - [ ] Set up Supabase Project & Environment Variables <!-- id: 4 -->
 
