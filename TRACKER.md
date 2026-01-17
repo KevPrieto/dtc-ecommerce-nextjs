@@ -78,7 +78,16 @@
   - Created comprehensive documentation: docs/database-schema.md
   - Schema includes relationships, indexes, design rationale, and explicit exclusions
   - Verified internal consistency and alignment with architecture.md
-- [ ] Create Seed Script for "Calm Form" Products <!-- id: 10 -->
+- [ ] Create Seed Script for "Calm Form" Products <!-- id: 10 --> [STRUCTURE READY - AWAITING CONTENT APPROVAL]
+  - Created seed script structure: scripts/seed-products.ts
+  - Defined 8 individual products + 2 bundles (AM/PM routines)
+  - Structured 23 SKU variants (sizes, skin types)
+  - SKU naming convention: category-type-size-variant
+  - Created planning document: docs/seed-data-plan.md
+  - All product names marked [PLACEHOLDER]
+  - All descriptions marked [PLACEHOLDER]
+  - All prices marked PLACEHOLDER (€28-€72 range suggested)
+  - BLOCKED: Awaiting approval on final product names, descriptions, and pricing
 - [ ] Implement Server-Side Product Fetching <!-- id: 11 -->
 - [ ] Build Product Listing Page (PLP) <!-- id: 12 -->
 - [ ] Build Product Detail Page (PDP) with Variants <!-- id: 13 -->
