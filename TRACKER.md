@@ -35,7 +35,15 @@
   - Border radius: Minimal (0.375rem) for clean, modern look
   - Added base typography styles in globals.css
   - Verified successful build
-- [ ] Implement Layouts (RootLayout, ShopLayout, AuthLayout) <!-- id: 6 -->
+- [x] Implement Layouts (RootLayout, ShopLayout, AuthLayout) <!-- id: 6 -->
+  - Created ShopLayout: Header/main/footer structure with container and spacing
+  - Created AuthLayout: Centered layout for auth forms (max-width 28rem)
+  - Created CheckoutLayout: Minimal distraction-free layout (header only, no footer)
+  - Created AccountLayout: Sidebar layout for account navigation (aside + main)
+  - All layouts use Server Components (default)
+  - Created placeholder pages for each route group to verify layouts
+  - Structural HTML only - no design, no content, no navigation logic
+  - Verified successful build (8 routes generated)
 - [ ] Build Core UI Components (Buttons, Inputs, Cards) <!-- id: 7 -->
 - [ ] Build Header & Footer (Responsive) <!-- id: 8 -->
 
