@@ -3,17 +3,42 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-12-15.clover",
-});
+// Lazy initialization to prevent build errors when env vars are missing
+function getStripe() {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  if (!secretKey) {
+    throw new Error("STRIPE_SECRET_KEY not configured");
+  }
+  return new Stripe(secretKey, {
+    apiVersion: "2025-12-15.clover",
+  });
+}
 
-// Use service role for webhook (bypasses RLS)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getSupabase() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) {
+    return null;
+  }
+  return createClient(supabaseUrl, serviceRoleKey);
+}
 
 export async function POST(request: Request) {
+  // Check if Stripe is configured
+  let stripe: Stripe;
+  try {
+    stripe = getStripe();
+  } catch {
+    console.error("[Stripe Webhook] Stripe not configured");
+    return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
+  }
+
+  const supabase = getSupabase();
+  if (!supabase) {
+    console.error("[Stripe Webhook] Supabase not configured");
+    return NextResponse.json({ error: "Database not configured" }, { status: 503 });
+  }
+
   const body = await request.text();
   const headersList = await headers();
   const signature = headersList.get("stripe-signature");
@@ -22,14 +47,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "No signature" }, { status: 400 });
   }
 
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret) {
+    return NextResponse.json({ error: "Webhook secret not configured" }, { status: 503 });
+  }
+
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     console.error("Webhook signature verification failed:", err);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });

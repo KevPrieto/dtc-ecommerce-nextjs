@@ -3,7 +3,9 @@
     "allow": [
       "Bash(dir \"C:\\\\Website\\\\ecommerce\\\\dtc-ecommerce-nextjs\\\\app\" /s /b)",
       "Bash(npm install:*)",
-      "Bash(npx shadcn@latest add:*)"
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(clip:*)",
+      "Bash(powershell -Command \"Get-Content ''C:\\\\Website\\\\ecommerce\\\\dtc-ecommerce-nextjs\\\\scripts\\\\setup-database.sql'' | Set-Clipboard\")"
     ]
   }
 }

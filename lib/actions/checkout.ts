@@ -4,12 +4,32 @@ import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/server";
 import { CartItem } from "@/types";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-01-27.acacia",
-});
+// Lazy initialization to prevent build errors when env vars are missing
+function getStripe() {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  if (!secretKey) {
+    throw new Error("STRIPE_SECRET_KEY not configured");
+  }
+  return new Stripe(secretKey, {
+    apiVersion: "2025-12-15.clover",
+  });
+}
 
 export async function createCheckoutSession(items: CartItem[]) {
   const supabase = await createClient();
+
+  if (!supabase) {
+    throw new Error("Checkout service unavailable. Please try again later.");
+  }
+
+  // Get Stripe instance
+  let stripe: Stripe;
+  try {
+    stripe = getStripe();
+  } catch {
+    throw new Error("Payment service unavailable. Please try again later.");
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser();

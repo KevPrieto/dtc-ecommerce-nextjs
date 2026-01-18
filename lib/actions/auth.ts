@@ -7,6 +7,10 @@ import { revalidatePath } from "next/cache";
 export async function signUp(prevState: unknown, formData: FormData) {
   const supabase = await createClient();
 
+  if (!supabase) {
+    return { error: "Authentication service unavailable. Please try again later." };
+  }
+
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const fullName = formData.get("fullName") as string;
@@ -38,6 +42,10 @@ export async function signUp(prevState: unknown, formData: FormData) {
 export async function signIn(prevState: unknown, formData: FormData) {
   const supabase = await createClient();
 
+  if (!supabase) {
+    return { error: "Authentication service unavailable. Please try again later." };
+  }
+
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -56,13 +64,18 @@ export async function signIn(prevState: unknown, formData: FormData) {
 
 export async function signOut() {
   const supabase = await createClient();
-  await supabase.auth.signOut();
+  if (supabase) {
+    await supabase.auth.signOut();
+  }
   revalidatePath("/", "layout");
   redirect("/");
 }
 
 export async function getUser() {
   const supabase = await createClient();
+  if (!supabase) {
+    return null;
+  }
   const {
     data: { user },
   } = await supabase.auth.getUser();

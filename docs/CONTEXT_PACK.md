@@ -1,6 +1,6 @@
 # CONTEXT_PACK — Single Source of Truth
 
-> **Purpose:** Eliminate context drift across devices (PC / Mobile / Claude sessions).  
+> **Purpose:** Eliminate context drift across devices (PC / Mobile / Claude sessions).
 > **Status:** LOCKED — Facts only. No speculative improvements.
 
 ---
@@ -71,10 +71,10 @@ app/
 |-----|-------|
 | **Current Phase** | Phase 2 — Data Layer |
 | **Completion** | **30%** |
-| **Last Commit** | 7a6de0a |
-| **Active Branch** | claude/execute-tracker-tasks-fEWI7 |
+| **Last Commit** | da45300 |
+| **Active Branch** | main |
 
-### Fully Implemented ✅
+### Fully Implemented
 
 - Project initialization (Next.js 15, TypeScript, App Router)
 - Tailwind CSS + shadcn/ui configuration
@@ -82,15 +82,15 @@ app/
 - Route group layouts: `(shop)`, `(auth)`, `(checkout)`, `(account)`
 - Core UI components: Button, Input, Card
 - Header & Footer (responsive)
-- Supabase client setup (server + browser)
+- Supabase client setup (server + browser, graceful degradation)
 - Database schema design
+- Seed script with finalized content (10 products, 15 variants)
 
-### Partially Implemented ⚠️
+### Partially Implemented
 
-- Seed script structure exists (`scripts/seed-products.ts`) — content is PLACEHOLDER
-- Supabase clients created — not connected to live project
+- Supabase clients created — not connected to live project (requires PC configuration)
 
-### Not Yet Implemented ❌
+### Not Yet Implemented
 
 - Server-side product fetching (Task #11)
 - Product Listing Page / Product Detail Page (Tasks #12-13)
@@ -120,7 +120,7 @@ app/
 - **Soft deletes:** `is_active` flags on products/variants
 - **Historical preservation:** Product names and prices denormalized in `order_items`
 
-> **Reference:** [database-schema.md](file:///c:/Website/ecommerce/dtc-ecommerce-nextjs/docs/database-schema.md)
+> **Reference:** [docs/database-schema.md](./database-schema.md)
 
 ---
 
@@ -129,11 +129,22 @@ app/
 | Key | Value |
 |-----|-------|
 | **Script Location** | `scripts/seed-products.ts` |
-| **Structure** | ✅ Complete (10 products, 23 variants) |
-| **Content** | ⚠️ PLACEHOLDER (names, descriptions, pricing) |
-| **Status** | BLOCKED — pending content approval |
+| **Structure** | ✅ Complete (10 products, 15 variants) |
+| **Content** | ✅ FINALIZED (names, descriptions, pricing) |
+| **Status** | Ready to run — blocked on Supabase configuration |
 
-> **Reference:** [seed-data-plan.md](file:///c:/Website/ecommerce/dtc-ecommerce-nextjs/docs/seed-data-plan.md)
+### Product Catalog Summary
+
+| Category | Products | Variants |
+|----------|----------|----------|
+| cleansers | 1 | 2 |
+| treatments | 4 | 6 |
+| moisturizers | 2 | 4 |
+| sun-protection | 1 | 1 |
+| bundles | 2 | 2 |
+| **Total** | **10** | **15** |
+
+> **Reference:** [docs/seed-data-plan.md](./seed-data-plan.md)
 
 ---
 
@@ -141,16 +152,15 @@ app/
 
 | Key | Value |
 |-----|-------|
-| **Latest Completed Task** | Task #9 (Database Schema Design) |
-| **Current Blocked Task** | Task #10 (content-dependent) |
+| **Latest Completed Task** | Task #10 (Finalize Seed Script Content) |
+| **Next Task** | Task #11 (Server-Side Product Fetching) — Requires PC |
 
-> **Reference:** [TRACKER.md](file:///c:/Website/ecommerce/dtc-ecommerce-nextjs/TRACKER.md)
+> **Reference:** [TRACKER.md](../TRACKER.md)
 
-### Mobile-safe Tasks ✅
+### Mobile-safe Tasks
 
 | Task | Description |
 |------|-------------|
-| #10 | Finalize Seed Script Content |
 | #14 | Implement Cart Store (Zustand) |
 | #15 | Build Cart Drawer/Page |
 | #17 | Create Order Success Page |
@@ -158,7 +168,7 @@ app/
 | #22 | Fix Critical UI/UX Bugs |
 | #24 | Final Review against PRD |
 
-### Requires PC Access 🖥️
+### Requires PC Access
 
 | Task | Description |
 |------|-------------|
@@ -187,6 +197,7 @@ app/
 - Environment variable configuration
 - Stripe/Supabase integration
 - Database migrations
+- Running seed script
 - Final deployment
 
 ---
@@ -195,10 +206,9 @@ app/
 
 | Date | Change |
 |------|--------|
-| 2026-01-18 | Created `CONTEXT_PACK.md` as single source of truth |
-| 2026-01-18 | Aligned with existing docs (`TRACKER.md`, `prd.md`, `architecture.md`, `database-schema.md`, `seed-data-plan.md`) |
-
-> **Note:** `PROJECT_SNAPSHOT.md` referenced in request does not exist in repository — marked as UNKNOWN.
+| 2026-01-18 | Updated CONTEXT_PACK.md to reflect Task #10 completion |
+| 2026-01-18 | Aligned with current state (commit da45300) |
+| 2026-01-18 | Verified consistency with PROJECT_SNAPSHOT.md, TRACKER.md |
 
 ---
 
@@ -206,57 +216,62 @@ app/
 
 > **For Sonnet 4.5 / Opus 4.5 Execution**
 
-## Immediate Next Task: Task #10 — Finalize Seed Script Content
+## Immediate Next: Task #11 — Server-Side Product Fetching
 
-### Prerequisites
-- ✅ Seed script structure exists (`scripts/seed-products.ts`)
-- ✅ Planning document exists (`docs/seed-data-plan.md`)
-- ⚠️ Content is PLACEHOLDER — needs finalization
+### Prerequisites (PC Required)
 
-### Execution Steps
+1. **Create Supabase project** at supabase.com
+2. **Configure environment variables** in `.env.local`:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+   ```
+3. **Create database tables** using SQL from `docs/database-schema.md`
+4. **Run seed script**: `npm run seed:products` (after adding npm script)
 
-1. **Update brand references**
-   - Replace all "CALM FORM" references with "VÉRA" across:
-     - `scripts/seed-products.ts`
-     - `docs/seed-data-plan.md`
-     - `docs/database-schema.md`
-     - Any component files (Header, Footer)
+### Implementation Steps
 
-2. **Finalize product content**
-   - Replace `[PLACEHOLDER]` product names with brand-appropriate names
-   - Write 1-2 sentence descriptions (clinical, benefit-focused)
-   - Confirm pricing in EUR cents
-   - Example: `{ name: "Vitamin C Brightening Serum", price: 5200 }` (€52.00)
+1. **Create TypeScript types** (`types/database.ts`)
+   - Product type with all fields
+   - ProductVariant type with all fields
+   - ProductWithVariants combined type
 
-3. **Confirm categories**
-   - `cleansers`, `treatments`, `moisturizers`, `sun-protection`, `bundles`
+2. **Create product query functions** (`lib/products.ts`)
+   ```typescript
+   getProducts(): Promise<ProductWithVariants[]>
+   getProductBySlug(slug: string): Promise<ProductWithVariants | null>
+   getProductsByCategory(category: string): Promise<ProductWithVariants[]>
+   ```
 
-4. **Set image strategy**
-   - Option A: Use `null` with UI fallback
-   - Option B: Generate placeholder images
-   - Option C: Upload to Supabase Storage (requires PC)
+3. **Handle graceful degradation**
+   - Return empty arrays if Supabase not configured
+   - Log warnings for debugging
+   - No runtime crashes
+
+4. **Verify data retrieval**
+   - Test queries in development
+   - Confirm all 10 products load correctly
 
 ### Blocked By
-- User approval on product names, descriptions, and pricing
 
-### Mobile-Safe Actions ✅
-- Update brand name from CALM FORM → VÉRA
-- Write product descriptions
-- Define pricing structure
-- Update documentation
-
-### Requires PC 🖥️
-- Running seed script against Supabase
-- Environment variable configuration
+- Supabase project configuration (PC only)
+- Environment variables not set
 
 ---
 
-## After Task #10: Recommended PC Session Tasks
+## After Task #11: Recommended Sequence
 
-| Order | Task | Why PC Required |
-|-------|------|-----------------|
-| 1 | Configure Supabase project | Env vars, dashboard access |
-| 2 | Run database migrations | Supabase CLI |
-| 3 | Run seed script | Requires configured Supabase |
-| 4 | Task #11: Product fetching | Testing requires DB connection |
-| 5 | Tasks #12-13: PLP/PDP | Full development cycle |
+| Order | Task | Dependency |
+|-------|------|------------|
+| 1 | #12: Product Listing Page | Task #11 (product fetching) |
+| 2 | #13: Product Detail Page | Task #11 (product fetching) |
+| 3 | #14: Cart Store (Zustand) | None (can parallel) |
+| 4 | #15: Cart Drawer/Page | Task #14 (cart store) |
+| 5 | #16: Stripe Checkout | Tasks #14, #15 (cart ready) |
+
+### Mobile-Parallel Option
+
+While waiting for PC access, these tasks can be started:
+- **Task #14**: Implement Zustand cart store (no Supabase dependency)
+- **Task #15**: Build cart drawer UI (uses local state only)
+- **Task #17**: Create order success page (static)
