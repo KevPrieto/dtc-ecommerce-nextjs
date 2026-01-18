@@ -19,7 +19,7 @@ type ProductSeed = {
   name: string; // PLACEHOLDER
   slug: string;
   description: string; // PLACEHOLDER
-  image_url: string; // PLACEHOLDER - use placeholder image service or null
+  image_url: string | null; // PLACEHOLDER - use placeholder image service or null
   category: string;
   is_active: boolean;
   variants: Array<{
@@ -272,6 +272,15 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
 export async function seedProducts() {
   const supabase = await createClient();
+
+  // TODO: Configure Supabase before running seed script
+  if (!supabase) {
+    console.error(
+      "❌ Cannot seed products: Supabase not configured.\n" +
+      "   Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local"
+    );
+    return;
+  }
 
   console.log("🌱 Starting product seed...");
   console.log(`📦 Seeding ${PRODUCT_SEEDS.length} products...`);
