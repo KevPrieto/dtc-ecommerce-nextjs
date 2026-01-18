@@ -22,7 +22,10 @@
   - Created lib/supabase/server.ts with SSR-compatible server client
   - Created lib/supabase/client.ts with browser client
   - Created .env.local.example with Supabase and Stripe variable templates
+  - Added graceful degradation: clients return null if env vars missing (safe mode)
+  - App can now build and run without Supabase configured (degraded state)
   - Verified successful build
+  - 🚨 BLOCKER: Supabase not configured - requires PC setup before data features work
 
 ## Phase 1: Core Components & Design System
 - [x] Define Typography & Color Palette (Calm, Premium, Minimal) <!-- id: 5 -->
@@ -78,7 +81,7 @@
   - Created comprehensive documentation: docs/database-schema.md
   - Schema includes relationships, indexes, design rationale, and explicit exclusions
   - Verified internal consistency and alignment with architecture.md
-- [ ] Create Seed Script for "Calm Form" Products <!-- id: 10 --> [STRUCTURE READY - AWAITING CONTENT APPROVAL]
+- [ ] Create Seed Script for "Calm Form" Products <!-- id: 10 --> [Can be done mobile ✅]
   - Created seed script structure: scripts/seed-products.ts
   - Defined 8 individual products + 2 bundles (AM/PM routines)
   - Structured 23 SKU variants (sizes, skin types)
@@ -88,23 +91,38 @@
   - All descriptions marked [PLACEHOLDER]
   - All prices marked PLACEHOLDER (€28-€72 range suggested)
   - BLOCKED: Awaiting approval on final product names, descriptions, and pricing
-- [ ] Implement Server-Side Product Fetching <!-- id: 11 -->
-- [ ] Build Product Listing Page (PLP) <!-- id: 12 -->
-- [ ] Build Product Detail Page (PDP) with Variants <!-- id: 13 -->
+  - Content decisions can be made on mobile, implementation requires PC
+- [ ] Implement Server-Side Product Fetching <!-- id: 11 --> [Requires PC 🖥️]
+  - Depends on: Supabase configured, database tables created, seed data populated
+- [ ] Build Product Listing Page (PLP) <!-- id: 12 --> [Requires PC 🖥️]
+  - Depends on: Task #11 complete
+- [ ] Build Product Detail Page (PDP) with Variants <!-- id: 13 --> [Requires PC 🖥️]
+  - Depends on: Task #11 complete
 
 ## Phase 3: Cart & Checkout Logic
-- [ ] Implement Cart Store (Zustand/Context - Client Side) <!-- id: 14 -->
-- [ ] Build Cart Drawer/Page <!-- id: 15 -->
-- [ ] Integrate Stripe Checkout (Test Mode) <!-- id: 16 -->
-- [ ] Create Order Success Page <!-- id: 17 -->
+- [ ] Implement Cart Store (Zustand/Context - Client Side) <!-- id: 14 --> [Can be done mobile ✅]
+  - No Supabase dependency - client-side only
+- [ ] Build Cart Drawer/Page <!-- id: 15 --> [Can be done mobile ✅]
+  - Uses local cart state only
+- [ ] Integrate Stripe Checkout (Test Mode) <!-- id: 16 --> [Requires PC 🖥️]
+  - Depends on: Stripe account, environment variables configured
+- [ ] Create Order Success Page <!-- id: 17 --> [Can be done mobile ✅]
+  - Static page, no data dependency
 
 ## Phase 4: Authentication & User Accounts
-- [ ] Implement Supabase Auth (Sign Up, Login, Guest) <!-- id: 18 -->
-- [ ] Build Account Dashboard (Order History) <!-- id: 19 -->
-- [ ] Protect Account Routes (Middleware) <!-- id: 20 -->
+- [ ] Implement Supabase Auth (Sign Up, Login, Guest) <!-- id: 18 --> [Requires PC 🖥️]
+  - Depends on: Supabase configured and auth enabled
+- [ ] Build Account Dashboard (Order History) <!-- id: 19 --> [Requires PC 🖥️]
+  - Depends on: Task #18 complete, orders table populated
+- [ ] Protect Account Routes (Middleware) <!-- id: 20 --> [Requires PC 🖥️]
+  - Depends on: Task #18 complete
 
 ## Phase 5: Polish & Deployment
-- [ ] Verify Mobile Responsiveness <!-- id: 21 -->
-- [ ] Fix Critical UI/UX Bugs <!-- id: 22 -->
-- [ ] Final Deployment to Vercel <!-- id: 23 -->
-- [ ] Final Review against PRD <!-- id: 24 -->
+- [ ] Verify Mobile Responsiveness <!-- id: 21 --> [Can be done mobile ✅]
+  - Test all pages on mobile viewports
+- [ ] Fix Critical UI/UX Bugs <!-- id: 22 --> [Can be done mobile ✅]
+  - Review/documentation work (if no data dependency)
+- [ ] Final Deployment to Vercel <!-- id: 23 --> [Requires PC 🖥️]
+  - Depends on: All environment variables configured
+- [ ] Final Review against PRD <!-- id: 24 --> [Can be done mobile ✅]
+  - Review and documentation work
