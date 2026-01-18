@@ -8,7 +8,7 @@
 
 ## Project Overview
 
-**Name:** CALM FORM
+**Brand Name:** VÉRA (working name: CALM FORM)
 **Type:** DTC (Direct-to-Consumer) Ecommerce Platform
 **Industry:** Premium Clean Skincare
 **Purpose:** Portfolio/demo project for Upwork client acquisition
@@ -284,6 +284,107 @@
 
 ---
 
+## Mobile-safe vs PC-required Tasks
+
+### Can Be Done on Mobile ✅
+
+These tasks involve content decisions, UI work, or review - no database/environment setup required:
+
+**Task #10: Finalize Seed Script Content**
+- Decide product names (8 individual + 2 bundles)
+- Write product descriptions (1-2 sentences, benefit-focused)
+- Confirm pricing strategy (€28-€72 range)
+- Choose image strategy (placeholders vs real images)
+
+**Task #14: Implement Cart Store (Zustand)**
+- Install Zustand + persist middleware
+- Create cart state management (add, remove, update, clear)
+- Persist to localStorage
+- No Supabase dependency
+
+**Task #15: Build Cart Drawer/Page**
+- Display cart items with controls
+- Quantity adjustment
+- Remove items functionality
+- Calculate totals
+- Uses local cart state only
+
+**Task #17: Create Order Success Page**
+- Static confirmation page
+- Order summary display
+- No data dependency
+
+**Task #21: Verify Mobile Responsiveness**
+- Test all pages on mobile viewports
+- Fix layout issues
+- Ensure touch targets adequate
+
+**Task #22: Fix Critical UI/UX Bugs**
+- Review pages for bugs
+- Fix spacing/alignment
+- Ensure consistent typography
+- Test form validation
+
+**Task #24: Final Review against PRD**
+- Verify requirements met
+- Document deviations
+- Prepare demo walkthrough
+- Update README
+
+---
+
+### Requires PC Access 🖥️
+
+These tasks require database setup, environment configuration, or deployment:
+
+**Task #11: Implement Server-Side Product Fetching**
+- Depends on: Supabase configured, DB tables created, seed data populated
+- Create product queries
+- Create TypeScript types
+- Handle null Supabase gracefully
+
+**Task #12: Build Product Listing Page (PLP)**
+- Depends on: Task #11 complete
+- Fetch products from Supabase
+- Display product grid
+- Category filtering
+
+**Task #13: Build Product Detail Page (PDP)**
+- Depends on: Task #11 complete
+- Dynamic route `/products/[slug]`
+- Variant selector
+- Add to Cart functionality
+
+**Task #16: Integrate Stripe Checkout**
+- Depends on: Stripe account, env vars configured
+- Install Stripe SDK
+- Create checkout session
+- Webhook handler
+
+**Task #18: Implement Supabase Auth**
+- Depends on: Supabase configured
+- Login/signup forms
+- Guest checkout support
+
+**Task #19: Build Account Dashboard**
+- Depends on: Task #18 complete
+- Fetch user orders
+- Display order history
+- Account navigation
+
+**Task #20: Protect Account Routes (Middleware)**
+- Depends on: Task #18 complete
+- Auth check middleware
+- Redirect logic
+
+**Task #23: Final Deployment to Vercel**
+- Depends on: All env vars configured
+- Connect GitHub → Vercel
+- Configure production env vars
+- Test production build
+
+---
+
 ## Known Limitations / TODOs
 
 ### Supabase (CRITICAL)
@@ -433,5 +534,5 @@ dtc-ecommerce-nextjs/
 - ⏳ Stripe not configured (PC required)
 - ⏳ Not deployed (PC required)
 
-**Current Phase:** Phase 2 (Data Layer) - 50% complete
+**Current Phase:** Phase 2 (Data Layer) - 30% complete
 **Ready for:** Product content decisions (mobile) OR Supabase setup (PC)
