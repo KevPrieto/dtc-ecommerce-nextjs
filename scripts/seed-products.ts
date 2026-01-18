@@ -1,31 +1,31 @@
 /**
- * CALM FORM Product Seed Data
+ * VÉRA Product Seed Data
  *
  * This script populates the database with:
  * - 8 individual skincare products
  * - 2 routine bundles (AM / PM)
  *
- * IMPORTANT: This file contains PLACEHOLDER data.
- * Final product names, descriptions, and prices need approval.
+ * Brand: VÉRA - Premium clean skincare
+ * Tone: Clinical, minimal, benefit-focused
  */
 
 import { createClient } from "@/lib/supabase/server";
 
 // ============================================================================
-// PLACEHOLDER DATA - TO BE FINALIZED
+// PRODUCT DATA - FINALIZED
 // ============================================================================
 
 type ProductSeed = {
-  name: string; // PLACEHOLDER
+  name: string;
   slug: string;
-  description: string; // PLACEHOLDER
-  image_url: string | null; // PLACEHOLDER - use placeholder image service or null
+  description: string;
+  image_url: string | null;
   category: string;
   is_active: boolean;
   variants: Array<{
     name: string;
     sku: string;
-    price: number; // PLACEHOLDER - in cents
+    price: number; // in cents (EUR)
     stock: number;
     is_active: boolean;
   }>;
@@ -38,24 +38,24 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 1. CLEANSER
   {
-    name: "[PLACEHOLDER] Gentle Cleansing Gel",
+    name: "Gentle Cleansing Gel",
     slug: "gentle-cleansing-gel",
-    description: "[PLACEHOLDER] A gentle, pH-balanced cleanser that removes impurities without stripping skin. Suitable for daily use.",
-    image_url: null, // PLACEHOLDER
+    description: "A pH-balanced gel cleanser that removes impurities without disrupting the skin barrier. Suitable for daily AM/PM use.",
+    image_url: null,
     category: "cleansers",
     is_active: true,
     variants: [
       {
         name: "100ml",
         sku: "CLN-GEL-100",
-        price: 2800, // PLACEHOLDER - €28.00
+        price: 2800, // €28.00
         stock: 50,
         is_active: true,
       },
       {
         name: "200ml",
         sku: "CLN-GEL-200",
-        price: 4200, // PLACEHOLDER - €42.00
+        price: 4200, // €42.00
         stock: 50,
         is_active: true,
       },
@@ -64,17 +64,17 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 2. TONER/ESSENCE
   {
-    name: "[PLACEHOLDER] Hydrating Essence",
+    name: "Hydrating Essence",
     slug: "hydrating-essence",
-    description: "[PLACEHOLDER] A lightweight essence that preps skin for better absorption of active ingredients. Hydrates and balances.",
-    image_url: null, // PLACEHOLDER
+    description: "A lightweight liquid treatment that prepares skin for subsequent steps. Enhances absorption and balances hydration levels.",
+    image_url: null,
     category: "treatments",
     is_active: true,
     variants: [
       {
         name: "100ml",
         sku: "ESS-HYD-100",
-        price: 3200, // PLACEHOLDER - €32.00
+        price: 3200, // €32.00
         stock: 50,
         is_active: true,
       },
@@ -83,24 +83,24 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 3. SERUM - HYDRATING
   {
-    name: "[PLACEHOLDER] Hydrating Serum",
-    slug: "hydrating-serum",
-    description: "[PLACEHOLDER] A concentrated serum with hyaluronic acid. Deeply hydrates and plumps skin.",
-    image_url: null, // PLACEHOLDER
+    name: "Hyaluronic Serum",
+    slug: "hyaluronic-serum",
+    description: "A concentrated serum with multi-weight hyaluronic acid. Delivers deep hydration and supports skin plumpness.",
+    image_url: null,
     category: "treatments",
     is_active: true,
     variants: [
       {
         name: "30ml",
         sku: "SER-HYD-30",
-        price: 4500, // PLACEHOLDER - €45.00
+        price: 4500, // €45.00
         stock: 50,
         is_active: true,
       },
       {
         name: "50ml",
         sku: "SER-HYD-50",
-        price: 6800, // PLACEHOLDER - €68.00
+        price: 6800, // €68.00
         stock: 50,
         is_active: true,
       },
@@ -109,24 +109,24 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 4. SERUM - BRIGHTENING
   {
-    name: "[PLACEHOLDER] Brightening Serum",
-    slug: "brightening-serum",
-    description: "[PLACEHOLDER] A vitamin C serum that targets dark spots and uneven tone. Reveals brighter, more radiant skin.",
-    image_url: null, // PLACEHOLDER
+    name: "Vitamin C Serum",
+    slug: "vitamin-c-serum",
+    description: "A stabilized vitamin C formula that targets uneven tone and dullness. Supports a brighter, more even complexion.",
+    image_url: null,
     category: "treatments",
     is_active: true,
     variants: [
       {
         name: "30ml",
-        sku: "SER-BRT-30",
-        price: 4800, // PLACEHOLDER - €48.00
+        sku: "SER-VTC-30",
+        price: 4800, // €48.00
         stock: 50,
         is_active: true,
       },
       {
         name: "50ml",
-        sku: "SER-BRT-50",
-        price: 7200, // PLACEHOLDER - €72.00
+        sku: "SER-VTC-50",
+        price: 7200, // €72.00
         stock: 50,
         is_active: true,
       },
@@ -135,31 +135,31 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 5. MOISTURIZER
   {
-    name: "[PLACEHOLDER] Daily Moisturizer",
+    name: "Daily Moisturizer",
     slug: "daily-moisturizer",
-    description: "[PLACEHOLDER] A lightweight, non-greasy moisturizer suitable for all skin types. Locks in hydration throughout the day.",
-    image_url: null, // PLACEHOLDER
+    description: "A lightweight, non-comedogenic moisturizer that locks in hydration. Available in formulations optimized for different skin types.",
+    image_url: null,
     category: "moisturizers",
     is_active: true,
     variants: [
       {
-        name: "50ml - Normal Skin",
+        name: "50ml — Normal Skin",
         sku: "MOI-DAY-50-NRM",
-        price: 3800, // PLACEHOLDER - €38.00
+        price: 3800, // €38.00
         stock: 50,
         is_active: true,
       },
       {
-        name: "50ml - Dry Skin",
+        name: "50ml — Dry Skin",
         sku: "MOI-DAY-50-DRY",
-        price: 3800, // PLACEHOLDER - €38.00
+        price: 3800, // €38.00
         stock: 50,
         is_active: true,
       },
       {
-        name: "50ml - Oily Skin",
+        name: "50ml — Oily Skin",
         sku: "MOI-DAY-50-OIL",
-        price: 3800, // PLACEHOLDER - €38.00
+        price: 3800, // €38.00
         stock: 50,
         is_active: true,
       },
@@ -168,17 +168,17 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 6. EYE CREAM
   {
-    name: "[PLACEHOLDER] Revitalizing Eye Cream",
-    slug: "revitalizing-eye-cream",
-    description: "[PLACEHOLDER] A rich eye cream that targets fine lines, puffiness, and dark circles. Gentle formula for delicate eye area.",
-    image_url: null, // PLACEHOLDER
+    name: "Eye Repair Cream",
+    slug: "eye-repair-cream",
+    description: "A targeted treatment for the delicate eye area. Addresses fine lines, puffiness, and dark circles with peptide-rich formula.",
+    image_url: null,
     category: "moisturizers",
     is_active: true,
     variants: [
       {
         name: "15ml",
-        sku: "EYE-REV-15",
-        price: 4200, // PLACEHOLDER - €42.00
+        sku: "EYE-REP-15",
+        price: 4200, // €42.00
         stock: 50,
         is_active: true,
       },
@@ -187,17 +187,17 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 7. SUNSCREEN
   {
-    name: "[PLACEHOLDER] Mineral Sunscreen SPF 50",
+    name: "Mineral Sunscreen SPF 50",
     slug: "mineral-sunscreen-spf50",
-    description: "[PLACEHOLDER] A broad-spectrum mineral sunscreen with SPF 50. Lightweight, non-white-cast formula suitable for daily use.",
-    image_url: null, // PLACEHOLDER
+    description: "Broad-spectrum mineral protection with zinc oxide. Lightweight, non-whitening formula suitable for daily wear under makeup.",
+    image_url: null,
     category: "sun-protection",
     is_active: true,
     variants: [
       {
         name: "50ml",
         sku: "SUN-MIN-50",
-        price: 3600, // PLACEHOLDER - €36.00
+        price: 3600, // €36.00
         stock: 50,
         is_active: true,
       },
@@ -206,17 +206,17 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 8. FACE OIL
   {
-    name: "[PLACEHOLDER] Nourishing Face Oil",
-    slug: "nourishing-face-oil",
-    description: "[PLACEHOLDER] A blend of botanical oils that nourish and restore skin barrier. Use as last step in PM routine.",
-    image_url: null, // PLACEHOLDER
+    name: "Barrier Repair Oil",
+    slug: "barrier-repair-oil",
+    description: "A botanical oil blend that restores and strengthens the skin barrier. Best used as the final step in evening routines.",
+    image_url: null,
     category: "treatments",
     is_active: true,
     variants: [
       {
         name: "30ml",
-        sku: "OIL-NOU-30",
-        price: 4600, // PLACEHOLDER - €46.00
+        sku: "OIL-BAR-30",
+        price: 4600, // €46.00
         stock: 50,
         is_active: true,
       },
@@ -229,17 +229,17 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 9. AM ROUTINE BUNDLE
   {
-    name: "[PLACEHOLDER] AM Routine Bundle",
-    slug: "am-routine-bundle",
-    description: "[PLACEHOLDER] Complete morning skincare routine. Includes: Cleanser, Brightening Serum, Daily Moisturizer, and Mineral Sunscreen.",
-    image_url: null, // PLACEHOLDER
+    name: "AM Routine Set",
+    slug: "am-routine-set",
+    description: "Complete morning routine for protection and radiance. Includes: Gentle Cleansing Gel, Vitamin C Serum, Daily Moisturizer, and Mineral Sunscreen SPF 50.",
+    image_url: null,
     category: "bundles",
     is_active: true,
     variants: [
       {
         name: "Complete Set",
         sku: "BUN-AM-SET",
-        price: 12800, // PLACEHOLDER - €128.00 (vs €150.20 individual)
+        price: 12800, // €128.00 (~15% off €150.00 individual)
         stock: 30,
         is_active: true,
       },
@@ -248,17 +248,17 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 
   // 10. PM ROUTINE BUNDLE
   {
-    name: "[PLACEHOLDER] PM Routine Bundle",
-    slug: "pm-routine-bundle",
-    description: "[PLACEHOLDER] Complete evening skincare routine. Includes: Cleanser, Hydrating Essence, Hydrating Serum, and Nourishing Face Oil.",
-    image_url: null, // PLACEHOLDER
+    name: "PM Routine Set",
+    slug: "pm-routine-set",
+    description: "Complete evening routine for repair and nourishment. Includes: Gentle Cleansing Gel, Hydrating Essence, Hyaluronic Serum, and Barrier Repair Oil.",
+    image_url: null,
     category: "bundles",
     is_active: true,
     variants: [
       {
         name: "Complete Set",
         sku: "BUN-PM-SET",
-        price: 13200, // PLACEHOLDER - €132.00 (vs €154.00 individual)
+        price: 13200, // €132.00 (~15% off €155.00 individual)
         stock: 30,
         is_active: true,
       },
@@ -273,7 +273,6 @@ const PRODUCT_SEEDS: ProductSeed[] = [
 export async function seedProducts() {
   const supabase = await createClient();
 
-  // TODO: Configure Supabase before running seed script
   if (!supabase) {
     console.error(
       "❌ Cannot seed products: Supabase not configured.\n" +
@@ -282,7 +281,7 @@ export async function seedProducts() {
     return;
   }
 
-  console.log("🌱 Starting product seed...");
+  console.log("🌱 Starting VÉRA product seed...");
   console.log(`📦 Seeding ${PRODUCT_SEEDS.length} products...`);
 
   for (const productSeed of PRODUCT_SEEDS) {
@@ -336,7 +335,7 @@ export async function seedProducts() {
     }
   }
 
-  console.log("✨ Product seed complete!");
+  console.log("✨ VÉRA product seed complete!");
 }
 
 // ============================================================================

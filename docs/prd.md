@@ -121,7 +121,7 @@ El proyecto es exitoso si:
 
 ## 🔒 PRD — Sección añadida: Producto y Marca (LOCKED)
 **Marca**
-*   Nombre: CALM FORM
+*   Nombre: VÉRA
 *   Industria: Skincare DTC
 *   Posicionamiento: Premium clean skincare
 *   Tono: Premium · Minimal · Clínico

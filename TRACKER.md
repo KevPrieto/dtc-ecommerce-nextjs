@@ -1,4 +1,4 @@
-# Project Tracker: DTC Ecommerce "Calm Form"
+# Project Tracker: DTC Ecommerce "VÉRA"
 
 ## Phase 0: Foundations & Architecture
 - [x] Analyze PRD and defined constraints <!-- id: 0 -->
@@ -56,7 +56,7 @@
   - Components are generic and reusable (no product-specific logic)
   - Verified successful build
 - [x] Build Header & Footer (Responsive) <!-- id: 8 -->
-  - Created Header component: Brand name "CALM FORM", navigation (Shop, About), account/cart icons
+  - Created Header component: Brand name "VÉRA", navigation (Shop, About), account/cart icons
   - Created Footer component: Brand name, descriptor "Clean skincare essentials", links (Shipping, Privacy, Terms), copyright
   - Created CheckoutHeader component: Minimal logo-only header for distraction-free checkout
   - Mobile-first responsive design: Navigation moves below header on mobile
@@ -81,17 +81,15 @@
   - Created comprehensive documentation: docs/database-schema.md
   - Schema includes relationships, indexes, design rationale, and explicit exclusions
   - Verified internal consistency and alignment with architecture.md
-- [ ] Create Seed Script for "Calm Form" Products <!-- id: 10 --> [Can be done mobile ✅]
-  - Created seed script structure: scripts/seed-products.ts
-  - Defined 8 individual products + 2 bundles (AM/PM routines)
-  - Structured 23 SKU variants (sizes, skin types)
-  - SKU naming convention: category-type-size-variant
-  - Created planning document: docs/seed-data-plan.md
-  - All product names marked [PLACEHOLDER]
-  - All descriptions marked [PLACEHOLDER]
-  - All prices marked PLACEHOLDER (€28-€72 range suggested)
-  - BLOCKED: Awaiting approval on final product names, descriptions, and pricing
-  - Content decisions can be made on mobile, implementation requires PC
+- [x] Finalize Seed Script Content for VÉRA Products <!-- id: 10 -->
+  - Replaced all "CALM FORM" references with "VÉRA" across codebase
+  - Finalized 8 individual products + 2 bundles (AM/PM routines)
+  - Products: Gentle Cleansing Gel, Hydrating Essence, Hyaluronic Serum, Vitamin C Serum, Daily Moisturizer, Eye Repair Cream, Mineral Sunscreen SPF 50, Barrier Repair Oil
+  - Bundles: AM Routine Set, PM Routine Set
+  - Wrote clinical, benefit-focused descriptions (1-2 sentences each)
+  - Confirmed pricing: €28-€72 individual, €128-€132 bundles
+  - Total: 10 products, 15 variants ready for seeding
+  - Images: Set to null (UI fallback strategy)
 - [ ] Implement Server-Side Product Fetching <!-- id: 11 --> [Requires PC 🖥️]
   - Depends on: Supabase configured, database tables created, seed data populated
 - [ ] Build Product Listing Page (PLP) <!-- id: 12 --> [Requires PC 🖥️]

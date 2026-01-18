@@ -1,13 +1,13 @@
-# Seed Data Plan - CALM FORM Products
+# Seed Data Plan - VÉRA Products
 
-**Status:** STRUCTURE DEFINED - AWAITING FINAL CONTENT APPROVAL
-**Task:** #10 - Create Seed Script for "Calm Form" Products
+**Status:** ✅ CONTENT FINALIZED
+**Task:** #10 - Finalize Seed Script Content for VÉRA Products
 
 ---
 
 ## Overview
 
-This document outlines the structure for seeding the CALM FORM product catalog.
+This document outlines the structure for seeding the VÉRA product catalog.
 
 **Total Products:** 10 (8 individual + 2 bundles)
 **Total Variants:** 23 SKUs
@@ -140,7 +140,7 @@ All names currently marked `[PLACEHOLDER]`. Need:
 - Brand-appropriate names
 - Descriptive but minimal
 - Premium positioning
-- Clinical tone (per CALM FORM brand)
+- Clinical tone (per VÉRA brand)
 
 ### 2. Product Descriptions
 All descriptions currently marked `[PLACEHOLDER]`. Need:

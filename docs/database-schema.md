@@ -1,4 +1,4 @@
-# Database Schema - CALM FORM Ecommerce
+# Database Schema - VÉRA Ecommerce
 
 **Last Updated:** 2026-01-17
 **Database:** Supabase (PostgreSQL)
@@ -280,7 +280,7 @@ Per PRD scope and minimal-but-realistic constraint:
 1. Use Supabase migrations for version control
 2. Create tables in order: profiles → products → product_variants → orders → order_items
 3. Enable Row Level Security (RLS) policies
-4. Seed with CALM FORM product data
+4. Seed with VÉRA product data
 
 **Next Steps:**
 - Task #10: Create seed script for products
