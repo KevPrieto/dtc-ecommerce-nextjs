@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "Calm Form",
-  description: "Premium clean skincare",
+  title: "VÉRA",
+  description: "Science-led skincare essentials",
 };
 
 export default function RootLayout({

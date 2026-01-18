@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Website\\\\ecommerce\\\\dtc-ecommerce-nextjs\\\\app\" /s /b)",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest add:*)"
+    ]
+  }
+}

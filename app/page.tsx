@@ -1,8 +1,19 @@
-export default function Home() {
+import { HeroSection } from "@/components/home/hero-section";
+import { FeaturedProducts } from "@/components/home/featured-products";
+import { BrandStory } from "@/components/home/brand-story";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Calm Form</h1>
-      <p className="mt-4 text-lg">Premium clean skincare</p>
-    </main>
+    <>
+      <Header />
+      <main>
+        <HeroSection />
+        <FeaturedProducts />
+        <BrandStory />
+      </main>
+      <Footer />
+    </>
   );
 }
