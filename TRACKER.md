@@ -1,5 +1,10 @@
 # Project Tracker: DTC Ecommerce "VÉRA"
 
+> **Brand Identity (LOCKED)**
+> - Premium · Minimal · Clinical · 100% Natural
+> - **Core Promise:** 100% natural ingredients from nature
+> - All products feature natural, plant-based formulations
+
 ## Phase 0: Foundations & Architecture
 - [x] Analyze PRD and defined constraints <!-- id: 0 -->
 - [x] Design Repository Structure & Architecture (Deliverable: docs/architecture.md) <!-- id: 1 -->
@@ -170,4 +175,81 @@
   - Catalog, Cart, Checkout flow complete
   - Auth and Account pages complete
   - Premium, minimal, clinical design maintained
+
+## Phase 8: Visual Impact & Desirability (CRITICAL)
+- [ ] Rework ALL Hover Animations <!-- id: 32 -->
+  - Goal: Clearly perceptible, premium hover states
+  - Scale: 1.03–1.06 range
+  - Light sweep or highlight on hover
+  - Soft shadow expansion
+  - Motion duration: 400–700ms
+  - Easing: cubic-bezier(0.16, 1, 0.3, 1)
+  - Applied to: Cards, buttons, links, images
+- [ ] Introduce Presence Animations <!-- id: 33 -->
+  - Goal: Elements feel alive even at rest
+  - Very subtle idle movement OR light shimmer
+  - NOT gimmicky — must feel intentional
+  - Respects prefers-reduced-motion
+- [ ] Replace Flat Cards with Depth System <!-- id: 34 -->
+  - Layered surfaces with elevation
+  - Soft ambient shadows (neutral only)
+  - Light elevation on hover
+  - No neon or colorful glows
+  - Clear foreground vs background separation
+
+## Phase 9: Product Imagery System (CRITICAL)
+- [ ] Replace ALL Product Placeholders with Branded VÉRA Imagery <!-- id: 39 -->
+  - Generate 10 product images via AI
+  - Each image must represent its category clearly
+  - Visible VÉRA branding on each bottle
+  - Must look like REAL products, not generic containers
+- [ ] Define Photography System (Consistency) <!-- id: 40 -->
+  - Same background tone (warm neutral)
+  - Same lighting direction (soft, 45-degree key)
+  - Same camera distance (product fills ~70% frame)
+  - Same shadow softness (diffused, minimal)
+  - Same framing (centered, slight elevation angle)
+
+## Phase 10: Hero Video (Portada)
+- [ ] Create Premium Brand Hero Video <!-- id: 41 -->
+  - Minimal, slow motion
+  - Abstract skincare textures OR product movement
+  - Editorial pacing
+  - No stock-feeling transitions
+  - Muted, clinical color grading
+  - Loop seamlessly
+
+## Phase 11: Typography & Editorial Rhythm
+- [ ] Increase Typographic Contrast <!-- id: 42 -->
+  - Headlines: Confident, calm, larger
+  - Body text: Breathing room (line-height + spacing)
+  - Clear visual hierarchy between headings
+- [ ] Introduce Editorial Rhythm <!-- id: 43 -->
+  - Intentional whitespace (luxury spacing)
+  - Clear section separation
+  - Visual "pauses" like luxury brands
+  - No cramped layouts
+
+## Phase 12: Final Quality Bar (€10K STANDARD)
+- [ ] Hero Section Emotional Pass <!-- id: 44 -->
+  - Must stop the scroll
+  - Headline contrast strong
+  - CTA feels alive (breathing, hover tension)
+  - Video or imagery pulls attention
+- [ ] Product Cards "Desire" Pass <!-- id: 45 -->
+  - Hover zoom on product images (controlled, elegant)
+  - Shadow + lift on hover
+  - Title/price react subtly
+- [ ] Section Transitions (Scroll Narrative) <!-- id: 46 -->
+  - Sections enter with staggered rhythm
+  - Different animations per section type
+  - Use scroll position to guide attention
+- [ ] Conversion Micro-moments <!-- id: 47 -->
+  - Add to cart: Clear success feedback
+  - CTA hover: Premium feel
+  - Navigation: Polish interactions
+- [ ] Final Professional Validation <!-- id: 48 -->
+  - Validation question: "Would this site make a client trust me with a €10k+ ecommerce build?"
+  - Compare to: Huly.io, Linear.app, Stripe.com
+  - If NO → task stays OPEN
 

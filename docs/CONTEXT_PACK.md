@@ -14,7 +14,8 @@
 | **Project Type** | DTC ecommerce demo |
 | **Purpose** | Portfolio project for Upwork client acquisition |
 | **Product Domain** | Premium clean skincare |
-| **Brand Positioning** | Premium · Minimal · Clinical |
+| **Brand Positioning** | Premium · Minimal · Clinical · 100% Natural |
+| **Core Promise** | 100% natural ingredients from nature |
 
 ---
 
