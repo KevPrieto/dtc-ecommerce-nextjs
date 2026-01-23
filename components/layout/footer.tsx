@@ -8,7 +8,7 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col gap-8">
           <div>
-            <h3 className="text-lg font-semibold tracking-tight">VÉRA</h3>
+            <h3 className="text-lg font-semibold tracking-tight">CALM FORM</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Science-led skincare essentials
             </p>
@@ -36,7 +36,7 @@ export function Footer() {
           </nav>
 
           <div className="text-xs text-muted-foreground">
-            © {currentYear} VÉRA. All rights reserved.
+            © {currentYear} CALM FORM. All rights reserved.
           </div>
         </div>
       </div>

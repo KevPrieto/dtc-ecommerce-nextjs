@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "VÉRA",
+  title: "CALM FORM",
   description: "Science-led skincare essentials",
 };
 

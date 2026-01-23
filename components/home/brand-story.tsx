@@ -4,7 +4,7 @@ export function BrandStory() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-semibold">
-            The VÉRA Standard
+            The CALM FORM Standard
           </h2>
           <p className="mt-6 text-muted-foreground leading-relaxed">
             Every formula is developed to deliver results you can see and

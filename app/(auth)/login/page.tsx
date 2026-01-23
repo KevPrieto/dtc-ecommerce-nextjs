@@ -2,7 +2,7 @@ import { LoginForm } from "@/components/auth/login-form";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Sign In | VÉRA",
+  title: "Sign In | CALM FORM",
 };
 
 export default function LoginPage() {
@@ -10,7 +10,7 @@ export default function LoginPage() {
     <div className="space-y-6">
       <div className="text-center">
         <Link href="/" className="text-xl font-semibold tracking-tight">
-          VÉRA
+          CALM FORM
         </Link>
         <h1 className="text-2xl font-semibold mt-6">Welcome back</h1>
         <p className="text-muted-foreground mt-2">Sign in to your account</p>

@@ -7,7 +7,7 @@ interface ProductsPageProps {
 }
 
 export const metadata = {
-  title: "Shop | VÉRA",
+  title: "Shop | CALM FORM",
 };
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {

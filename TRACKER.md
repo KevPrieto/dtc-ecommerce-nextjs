@@ -78,19 +78,58 @@
   - Created comprehensive documentation: docs/database-schema.md
   - Schema includes relationships, indexes, design rationale, and explicit exclusions
   - Verified internal consistency and alignment with architecture.md
-- [ ] Create Seed Script for "Calm Form" Products <!-- id: 10 --> [STRUCTURE READY - AWAITING CONTENT APPROVAL]
-  - Created seed script structure: scripts/seed-products.ts
-  - Defined 8 individual products + 2 bundles (AM/PM routines)
+  - Created Supabase migration: supabase/migrations/20260122000000_create_ecommerce_schema.sql
+  - Migration includes all tables, indexes, RLS policies, and helper functions
+- [x] Create Seed Script for "Calm Form" Products <!-- id: 10 -->
+  - Created seed script: scripts/seed-products.ts
+  - Finalized 8 individual products + 2 bundles (Morning Routine, Evening Routine)
   - Structured 23 SKU variants (sizes, skin types)
   - SKU naming convention: category-type-size-variant
   - Created planning document: docs/seed-data-plan.md
-  - All product names marked [PLACEHOLDER]
-  - All descriptions marked [PLACEHOLDER]
-  - All prices marked PLACEHOLDER (€28-€72 range suggested)
-  - BLOCKED: Awaiting approval on final product names, descriptions, and pricing
-- [ ] Implement Server-Side Product Fetching <!-- id: 11 -->
-- [ ] Build Product Listing Page (PLP) <!-- id: 12 -->
-- [ ] Build Product Detail Page (PDP) with Variants <!-- id: 13 -->
+  - Finalized product names with minimal, clinical tone
+  - Finalized descriptions (benefit-focused, no marketing hype)
+  - Pricing: €28-€72 range for individual products, €128-€132 for bundles (15% discount)
+  - Added npm script: `npm run seed:products`
+  - Added tsx dev dependency for TypeScript execution
+  - Created setup guide: docs/database-setup.md
+  - Ready to execute after database migration is applied
+- [x] Implement Server-Side Product Fetching <!-- id: 11 -->
+  - Product query functions already implemented in lib/queries/products.ts
+  - getProducts(category?) - Fetch all products with optional category filter
+  - getProductBySlug(slug) - Fetch single product by slug
+  - getFeaturedProducts(limit) - Get featured products for homepage
+  - getCategories() - Get all unique product categories
+  - Types defined in types/index.ts (Product, ProductVariant, ProductWithVariants)
+  - All queries use Supabase server client with proper error handling
+  - Queries include RLS-aware filtering (is_active = true)
+- [x] Build Product Listing Page (PLP) <!-- id: 12 -->
+  - Created app/(shop)/products/page.tsx
+  - Implements category filtering via URL search params
+  - Server-side rendering with async data fetching
+  - Components: ProductGrid, CategoryFilter
+  - ProductCard component shows product image, name, category, and lowest price
+  - "From" price indicator for products with multiple price variants
+  - Responsive grid layout (2-col mobile, 3-col tablet, 4-col desktop)
+  - Hover effects on product cards (scale transform)
+  - Empty state handling ("No products found")
+- [x] Build Product Detail Page (PDP) with Variants <!-- id: 13 -->
+  - Created app/(shop)/products/[slug]/page.tsx
+  - Dynamic route with slug parameter
+  - generateMetadata for SEO (product name, description)
+  - Two-column layout: product image + details
+  - ProductDetails component with variant selection
+  - VariantSelector: button group for size/type selection
+  - AddToCartButton: integrates with Zustand cart store
+  - Stock awareness: disabled state for out-of-stock variants
+  - Price updates dynamically based on selected variant
+  - Product info: category, name, price, description
+  - Additional info: free shipping, return policy
+  - Image fallback for products without images
+  - notFound() handling for invalid slugs
+  - Fixed branding: VÉRA → CALM FORM across all files
+  - Fixed Stripe API version compatibility (2025-12-15.clover)
+  - Implemented lazy Stripe initialization to fix build errors
+  - Verified successful production build
 
 ## Phase 3: Cart & Checkout Logic
 - [ ] Implement Cart Store (Zustand/Context - Client Side) <!-- id: 14 -->

@@ -2,7 +2,7 @@ import { RegisterForm } from "@/components/auth/register-form";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Create Account | VÉRA",
+  title: "Create Account | CALM FORM",
 };
 
 export default function RegisterPage() {
@@ -10,7 +10,7 @@ export default function RegisterPage() {
     <div className="space-y-6">
       <div className="text-center">
         <Link href="/" className="text-xl font-semibold tracking-tight">
-          VÉRA
+          CALM FORM
         </Link>
         <h1 className="text-2xl font-semibold mt-6">Create an account</h1>
         <p className="text-muted-foreground mt-2">

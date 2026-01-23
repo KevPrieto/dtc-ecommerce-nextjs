@@ -10,7 +10,7 @@ export function Header() {
       <header className="border-b">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="text-xl font-semibold tracking-tight">
-            VÉRA
+            CALM FORM
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">

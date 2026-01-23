@@ -8,7 +8,7 @@ interface SuccessPageProps {
 }
 
 export const metadata = {
-  title: "Order Confirmed | VÉRA",
+  title: "Order Confirmed | CALM FORM",
 };
 
 export default async function CheckoutSuccessPage({

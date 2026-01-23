@@ -4,7 +4,7 @@ import { getOrdersByUser } from "@/lib/queries/orders";
 import { OrderList } from "@/components/account/order-list";
 
 export const metadata = {
-  title: "Order History | VÉRA",
+  title: "Order History | CALM FORM",
 };
 
 export default async function OrdersPage() {
