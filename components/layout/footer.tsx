@@ -17,19 +17,19 @@ export function Footer() {
           <nav className="flex flex-wrap gap-6">
             <Link
               href="/shipping"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm text-muted-foreground transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-foreground hover:translate-x-1"
             >
               Shipping & Returns
             </Link>
             <Link
               href="/privacy"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm text-muted-foreground transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-foreground hover:translate-x-1"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm text-muted-foreground transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-foreground hover:translate-x-1"
             >
               Terms
             </Link>
