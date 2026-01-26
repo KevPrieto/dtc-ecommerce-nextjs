@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getProductBySlug, getProducts } from "@/lib/queries/products";
+import { getProductBySlug, getProductSlugsForBuild } from "@/lib/queries/products";
 import { ProductDetails } from "@/components/product/product-details";
 
 interface ProductPageProps {
@@ -10,11 +10,8 @@ interface ProductPageProps {
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const products = await getProducts();
-
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
+  // Use build-safe function that doesn't require cookies
+  return await getProductSlugsForBuild();
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {

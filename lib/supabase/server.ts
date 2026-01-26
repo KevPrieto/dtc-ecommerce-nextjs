@@ -92,3 +92,27 @@ export function createServiceRoleClient() {
     );
   }
 }
+
+/**
+ * Creates a cookie-less Supabase client using the anon key.
+ * Safe for build-time operations (generateStaticParams, generateMetadata).
+ * This client respects RLS policies.
+ */
+export function createAnonClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error(
+      "[Supabase Anon] Missing environment variables. " +
+      "Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY"
+    );
+  }
+
+  return createSupabaseClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+}

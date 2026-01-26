@@ -1,11 +1,19 @@
 import { cache } from "react";
-import { createClient } from "@/lib/supabase/server";
+import { createAnonClient } from "@/lib/supabase/server";
 import { ProductWithVariants } from "@/types";
+
+/**
+ * Get a Supabase client that works in both request and build contexts.
+ * Uses anon key (respects RLS) and doesn't require cookies.
+ */
+function getSupabase() {
+  return createAnonClient();
+}
 
 export const getProducts = cache(async (
   category?: string
 ): Promise<ProductWithVariants[]> => {
-  const supabase = await createClient();
+  const supabase = getSupabase();
 
   let query = supabase
     .from("products")
@@ -34,7 +42,7 @@ export const getProducts = cache(async (
 export const getProductBySlug = cache(async (
   slug: string
 ): Promise<ProductWithVariants | null> => {
-  const supabase = await createClient();
+  const supabase = getSupabase();
 
   const { data, error } = await supabase
     .from("products")
@@ -55,7 +63,7 @@ export const getProductBySlug = cache(async (
 export const getFeaturedProducts = cache(async (
   limit = 4
 ): Promise<ProductWithVariants[]> => {
-  const supabase = await createClient();
+  const supabase = getSupabase();
 
   const { data, error } = await supabase
     .from("products")
@@ -77,7 +85,7 @@ export const getFeaturedProducts = cache(async (
 });
 
 export const getCategories = cache(async (): Promise<string[]> => {
-  const supabase = await createClient();
+  const supabase = getSupabase();
 
   const { data, error } = await supabase
     .from("products")
@@ -92,3 +100,22 @@ export const getCategories = cache(async (): Promise<string[]> => {
   const categories = [...new Set(data?.map((p) => p.category) || [])];
   return categories;
 });
+
+/**
+ * Fetches product slugs for generateStaticParams (build-time).
+ */
+export async function getProductSlugsForBuild(): Promise<{ slug: string }[]> {
+  const supabase = getSupabase();
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("slug")
+    .eq("is_active", true);
+
+  if (error) {
+    console.error("[Products] Error fetching slugs for build:", error.message);
+    return [];
+  }
+
+  return (data || []).map((p) => ({ slug: p.slug }));
+}
