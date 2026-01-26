@@ -3,6 +3,9 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
+// Ensure the webhook is never cached
+export const dynamic = "force-dynamic";
+
 /**
  * Stripe client (lazy, safe for build)
  */
@@ -13,7 +16,9 @@ function getStripe() {
   }
 
   return new Stripe(secretKey, {
-    apiVersion: "2025-12-15.clover",
+    // Explicitly cast to prevent TypeScript version mismatch during build
+    apiVersion: "2025-12-15.clover" as any,
+    typescript: true,
   });
 }
 
@@ -71,7 +76,6 @@ export async function POST(request: Request) {
   const headersList = await headers();
   const signature = headersList.get("stripe-signature");
 
-
   if (!signature) {
     return NextResponse.json(
       { error: "Missing Stripe signature" },
@@ -96,10 +100,10 @@ export async function POST(request: Request) {
       signature,
       webhookSecret
     );
-  } catch (err) {
-    console.error("[Stripe Webhook] Signature verification failed:", err);
+  } catch (err: any) {
+    console.error("[Stripe Webhook] Signature verification failed:", err.message);
     return NextResponse.json(
-      { error: "Invalid signature" },
+      { error: `Invalid signature: ${err.message}` },
       { status: 400 }
     );
   }
@@ -108,6 +112,7 @@ export async function POST(request: Request) {
    * Handle checkout completion
    */
   if (event.type === "checkout.session.completed") {
+    // Explicitly cast to proper type
     const session = event.data.object as Stripe.Checkout.Session;
     const orderId = session.metadata?.order_id;
 
@@ -116,6 +121,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ received: true });
     }
 
+    console.log(`[Stripe Webhook] Processing order ${orderId}`);
+
     // Mark order as paid
     const { error: orderError } = await supabase
       .from("orders")
@@ -123,6 +130,7 @@ export async function POST(request: Request) {
         status: "paid",
         email: session.customer_email ?? session.customer_details?.email ?? null,
         stripe_payment_intent_id: session.payment_intent as string,
+        stripe_checkout_session_id: session.id, // Ensure session ID is synced
       })
       .eq("id", orderId);
 
@@ -134,7 +142,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Fetch order items
+    // Fetch order items for inventory management
     const { data: orderItems, error: itemsError } = await supabase
       .from("order_items")
       .select("product_variant_id, quantity")
@@ -149,6 +157,7 @@ export async function POST(request: Request) {
     }
 
     // Decrement stock (best-effort)
+    // We process these sequentially to avoid overwhelming the DB
     for (const item of orderItems ?? []) {
       const { error: stockError } = await supabase.rpc(
         "decrement_stock",
@@ -159,8 +168,9 @@ export async function POST(request: Request) {
       );
 
       if (stockError) {
+        // Log but do not fail the webhook, as the order is already paid
         console.error(
-          "[Stripe Webhook] Stock decrement failed:",
+          `[Stripe Webhook] Stock decrement failed for variant ${item.product_variant_id}:`,
           stockError
         );
       }
