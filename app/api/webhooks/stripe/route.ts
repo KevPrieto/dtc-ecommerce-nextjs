@@ -18,7 +18,7 @@ function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !serviceRoleKey) {
-    return null;
+    throw new Error("Supabase environment variables not configured");
   }
   return createClient(supabaseUrl, serviceRoleKey);
 }
@@ -33,8 +33,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
   }
 
-  const supabase = getSupabase();
-  if (!supabase) {
+  let supabase;
+  try {
+    supabase = getSupabase();
+  } catch {
     console.error("[Stripe Webhook] Supabase not configured");
     return NextResponse.json({ error: "Database not configured" }, { status: 503 });
   }

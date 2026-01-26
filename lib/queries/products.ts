@@ -6,11 +6,6 @@ export async function getProducts(
 ): Promise<ProductWithVariants[]> {
   const supabase = await createClient();
 
-  if (!supabase) {
-    console.warn("[Products] Supabase not configured - returning empty array");
-    return [];
-  }
-
   let query = supabase
     .from("products")
     .select(
@@ -40,11 +35,6 @@ export async function getProductBySlug(
 ): Promise<ProductWithVariants | null> {
   const supabase = await createClient();
 
-  if (!supabase) {
-    console.warn("[Products] Supabase not configured - returning null");
-    return null;
-  }
-
   const { data, error } = await supabase
     .from("products")
     .select(
@@ -65,11 +55,6 @@ export async function getFeaturedProducts(
   limit = 4
 ): Promise<ProductWithVariants[]> {
   const supabase = await createClient();
-
-  if (!supabase) {
-    console.warn("[Products] Supabase not configured - returning empty array");
-    return [];
-  }
 
   const { data, error } = await supabase
     .from("products")
@@ -92,11 +77,6 @@ export async function getFeaturedProducts(
 
 export async function getCategories(): Promise<string[]> {
   const supabase = await createClient();
-
-  if (!supabase) {
-    console.warn("[Products] Supabase not configured - returning empty array");
-    return [];
-  }
 
   const { data, error } = await supabase
     .from("products")

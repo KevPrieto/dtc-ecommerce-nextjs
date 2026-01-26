@@ -5,7 +5,12 @@
       "Bash(npm install:*)",
       "Bash(npx shadcn@latest add:*)",
       "Bash(clip:*)",
-      "Bash(powershell -Command \"Get-Content ''C:\\\\Website\\\\ecommerce\\\\dtc-ecommerce-nextjs\\\\scripts\\\\setup-database.sql'' | Set-Clipboard\")"
+      "Bash(powershell -Command \"Get-Content ''C:\\\\Website\\\\ecommerce\\\\dtc-ecommerce-nextjs\\\\scripts\\\\setup-database.sql'' | Set-Clipboard\")",
+      "Bash(file:*)",
+      "Bash(npm run build:*)",
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nTask #11: Remove safe-mode fallbacks, assume live Supabase data\n\nChanges:\n- Updated lib/supabase/server.ts to throw error if env vars missing\n- Updated lib/supabase/client.ts to throw error if env vars missing\n- Removed null checks from lib/queries/products.ts\n- Removed null checks from lib/queries/orders.ts\n- Removed null checks from lib/actions/auth.ts\n- Removed null check from lib/actions/checkout.ts\n- Updated webhook route error handling\n\nAll queries now assume Supabase is configured and available.\nEmpty data states are handled gracefully at UI level.\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }

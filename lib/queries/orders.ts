@@ -4,11 +4,6 @@ import { Order } from "@/types";
 export async function getOrdersByUser(userId: string): Promise<Order[]> {
   const supabase = await createClient();
 
-  if (!supabase) {
-    console.warn("[Orders] Supabase not configured - returning empty array");
-    return [];
-  }
-
   const { data, error } = await supabase
     .from("orders")
     .select("*")

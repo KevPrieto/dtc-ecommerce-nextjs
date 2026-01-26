@@ -18,10 +18,6 @@ function getStripe() {
 export async function createCheckoutSession(items: CartItem[]) {
   const supabase = await createClient();
 
-  if (!supabase) {
-    throw new Error("Checkout service unavailable. Please try again later.");
-  }
-
   // Get Stripe instance
   let stripe: Stripe;
   try {
