@@ -1,0 +1,72 @@
+[
+  {
+    "id": "3721522e-9bed-4863-9451-918bb0bf49c3",
+    "name": "Gentle Cleansing Gel",
+    "slug": "gentle-cleansing-gel",
+    "category": "cleansers",
+    "image_url": "/products/gentle-cleansing-gel.png"
+  },
+  {
+    "id": "e4c872c0-7d89-4833-8394-b08286d77727",
+    "name": "Hydrating Essence",
+    "slug": "hydrating-essence",
+    "category": "treatments",
+    "image_url": "/products/hydrating-essence.png"
+  },
+  {
+    "id": "0539064c-2d93-4f48-9a2b-79e5de259399",
+    "name": "Hyaluronic Serum",
+    "slug": "hyaluronic-serum",
+    "category": "treatments",
+    "image_url": "/products/hyaluronic-serum.png"
+  },
+  {
+    "id": "8d8a38f5-d77d-44e5-8e65-4c287c5bc637",
+    "name": "Vitamin C Serum",
+    "slug": "vitamin-c-serum",
+    "category": "treatments",
+    "image_url": "/products/vitamin-c-serum.png"
+  },
+  {
+    "id": "423d0dfc-ef87-4353-b137-c644bb0d4891",
+    "name": "Daily Moisturizer",
+    "slug": "daily-moisturizer",
+    "category": "moisturizers",
+    "image_url": "/products/daily-moisturizer.png"
+  },
+  {
+    "id": "c7302801-7387-45bb-b9f9-bdf3dbbb3dfd",
+    "name": "Eye Repair Cream",
+    "slug": "eye-repair-cream",
+    "category": "moisturizers",
+    "image_url": "/products/eye-repair-cream.png"
+  },
+  {
+    "id": "ff15d14f-83c5-4ff3-be29-4ce42cb8d909",
+    "name": "Mineral Sunscreen SPF 50",
+    "slug": "mineral-sunscreen-spf50",
+    "category": "sun-protection",
+    "image_url": "/products/mineral-sunscreen-spf50.png"
+  },
+  {
+    "id": "2306d735-ba8c-4a27-a2a1-260766a1a0df",
+    "name": "Barrier Repair Oil",
+    "slug": "barrier-repair-oil",
+    "category": "treatments",
+    "image_url": "/products/barrier-repair-oil.png"
+  },
+  {
+    "id": "d7be4cc4-340f-4671-bab1-fae744ac6b9f",
+    "name": "AM Routine Set",
+    "slug": "am-routine-set",
+    "category": "bundles",
+    "image_url": "/products/am-routine-set.png"
+  },
+  {
+    "id": "a5b1d9ae-bf56-4d28-934c-1bcc99885205",
+    "name": "PM Routine Set",
+    "slug": "pm-routine-set",
+    "category": "bundles",
+    "image_url": "/products/pm-routine-set.png"
+  }
+]

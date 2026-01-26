@@ -256,16 +256,16 @@
 ## Phase 13: Ralph Wiggum Autopilot Mode
 ### Group 1: Hero Video Integration
 - [x] Integrate the hero video into the homepage Hero section <!-- id: 49 -->
-- [ ] Ensure performance, autoplay muted, no audio, graceful fallback <!-- id: 50 -->
-- [ ] Ensure it aligns with premium / clinical aesthetic <!-- id: 51 -->
+- [x] Ensure performance, autoplay muted, no audio, graceful fallback <!-- id: 50 -->
+- [x] Ensure it aligns with premium / clinical aesthetic <!-- id: 51 -->
 
 ### Group 2: Product Card Navigation Fix
-- [ ] Fix product cards so ALL products correctly navigate to their PDP <!-- id: 52 -->
-- [ ] Verify slug usage, routing, and Link correctness <!-- id: 53 -->
-- [ ] Validate navigation for Clinical + Botanical products <!-- id: 54 -->
+- [/] Fix product cards so ALL products correctly navigate to their PDP <!-- id: 52 -->
+- [x] Verify slug usage, routing, and Link correctness <!-- id: 53 -->
+- [/] Validate navigation for Clinical + Botanical products <!-- id: 54 -->
 
 ### Group 3: Product Image Mapping & Collections
-- [ ] Map new images to Botanical Collection products <!-- id: 55 -->
-- [ ] Map Clinical Collection images consistently <!-- id: 56 -->
-- [ ] Ensure correct rendering in all relevant sections (homepage, collections, PDP) <!-- id: 57 -->
+- [x] Map new images to Botanical Collection products <!-- id: 55 -->
+- [x] Map Clinical Collection images consistently <!-- id: 56 -->
+- [x] Ensure correct rendering in all relevant sections (homepage, collections, PDP) <!-- id: 57 -->
 
