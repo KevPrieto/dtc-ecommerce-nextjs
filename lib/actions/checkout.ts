@@ -33,29 +33,29 @@ export async function createCheckoutSession(items: CartItem[]) {
   // Verify stock and get current prices from database
   const variantIds = items.map((i) => i.variantId);
   // 1. Fetch variants ONLY
-const { data: variants } = await supabase
-  .from("product_variants")
-  .select("*")
-  .in("id", variantIds);
+  const { data: variants } = await supabase
+    .from("product_variants")
+    .select("*")
+    .in("id", variantIds);
 
-if (!variants || variants.length !== items.length) {
-  throw new Error("Some products are no longer available");
-}
+  if (!variants || variants.length !== items.length) {
+    throw new Error("Some products are no longer available");
+  }
 
-// 2. Fetch products separately
-const productIds = [...new Set(variants.map(v => v.product_id))];
+  // 2. Fetch products separately
+  const productIds = [...new Set(variants.map(v => v.product_id))];
 
-const { data: products } = await supabase
-  .from("products")
-  .select("id, name, image_url")
-  .in("id", productIds);
+  const { data: products } = await supabase
+    .from("products")
+    .select("id, name, image_url")
+    .in("id", productIds);
 
-if (!products) {
-  throw new Error("Failed to load products");
-}
+  if (!products) {
+    throw new Error("Failed to load products");
+  }
 
-// 3. Build lookup map
-const productById = new Map(products.map(p => [p.id, p]));
+  // 3. Build lookup map
+  const productById = new Map(products.map(p => [p.id, p]));
 
 
   if (!variants || variants.length !== items.length) {
@@ -136,14 +136,23 @@ const productById = new Map(products.map(p => [p.id, p]));
     })
   );
 
+  // Validate site URL
+  const siteUrl = process.env.NEXT_PUBLIC_URL?.replace(/\/$/, "");
+  if (!siteUrl || !/^https?:\/\//.test(siteUrl)) {
+    throw new Error(
+      "Configuration Error: NEXT_PUBLIC_URL is missing or invalid in .env.local. " +
+      "It allows Stripe to redirect back to the site (e.g., http://localhost:3000)"
+    );
+  }
+
   // Create Stripe Checkout session
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     payment_method_types: ["card"],
     line_items: lineItems,
     customer_email: user?.email || undefined,
-    success_url: `${process.env.NEXT_PUBLIC_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_URL}/cart`,
+    success_url: `${siteUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${siteUrl}/cart`,
     metadata: {
       order_id: order.id,
     },
