@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 export function HeroSection() {
   return (
     <section className="bg-secondary">
-      <div className="container mx-auto px-4 py-24 md:py-32">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight">
+      <div className="container mx-auto px-4 py-32 md:py-40">
+        <div className="max-w-3xl">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]" style={{ letterSpacing: "-0.02em" }}>
             Clinical skincare, reduced to what works.
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground">
+          <p className="mt-8 text-xl md:text-2xl text-muted-foreground leading-relaxed">
             Focused formulations designed for measurable results.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
