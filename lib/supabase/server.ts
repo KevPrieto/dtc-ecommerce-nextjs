@@ -51,22 +51,44 @@ export async function createClient() {
  *
  * Requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY
  * environment variables to be configured in .env.local
+ *
+ * @throws Error if environment variables are missing or invalid
  */
 export function createServiceRoleClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
 
+  // Check for missing variables
   if (!supabaseUrl || !supabaseServiceKey) {
+    const missingVars = [];
+    if (!supabaseUrl) missingVars.push("NEXT_PUBLIC_SUPABASE_URL");
+    if (!supabaseServiceKey) missingVars.push("SUPABASE_SERVICE_ROLE_KEY");
+
     throw new Error(
-      "[Supabase] Missing service role environment variables. " +
-      "Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local"
+      `[Supabase Service Role] Missing required environment variables: ${missingVars.join(", ")}. ` +
+      `Configure these in .env.local`
     );
   }
 
-  return createSupabaseClient(supabaseUrl, supabaseServiceKey, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  });
+  // Validate URL format
+  if (!supabaseUrl.startsWith("http://") && !supabaseUrl.startsWith("https://")) {
+    throw new Error(
+      `[Supabase Service Role] Invalid NEXT_PUBLIC_SUPABASE_URL: "${supabaseUrl}". ` +
+      `URL must start with https:// (e.g., https://your-project.supabase.co)`
+    );
+  }
+
+  try {
+    return createSupabaseClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+  } catch (error) {
+    throw new Error(
+      `[Supabase Service Role] Failed to create client. Check that your URL and service role key are correct. ` +
+      `Error: ${error instanceof Error ? error.message : String(error)}`
+    );
+  }
 }

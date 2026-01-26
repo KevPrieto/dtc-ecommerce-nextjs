@@ -91,11 +91,21 @@ const productById = new Map(products.map(p => [p.id, p]));
     0
   );
 
-  // Use service role client to bypass RLS for order creation
-  const supabaseAdmin = createServiceRoleClient();
+  // Try to use service role client, fallback to regular client
+  // Note: If using regular client, Supabase RLS policies must allow:
+  //   - INSERT on orders table for authenticated and anonymous users
+  //   - INSERT on order_items table for authenticated and anonymous users
+  let supabaseForOrders;
+  try {
+    supabaseForOrders = createServiceRoleClient();
+    console.log("[Checkout] Using service role client for order creation");
+  } catch (error) {
+    console.warn("[Checkout] Service role not available, using regular client:", error);
+    supabaseForOrders = supabase;
+  }
 
   // Create pending order
-  const { data: order, error: orderError } = await supabaseAdmin
+  const { data: order, error: orderError } = await supabaseForOrders
     .from("orders")
     .insert({
       user_id: user?.id || null,
@@ -109,7 +119,7 @@ const productById = new Map(products.map(p => [p.id, p]));
   if (orderError) throw orderError;
 
   // Insert order items with denormalized data
-  await supabaseAdmin.from("order_items").insert(
+  await supabaseForOrders.from("order_items").insert(
     items.map((item) => {
       const variant = variants.find((v) => v.id === item.variantId)!;
       const product = productById.get(variant.product_id);
@@ -142,8 +152,8 @@ const productById = new Map(products.map(p => [p.id, p]));
     },
   });
 
-  // Update order with Stripe session ID (use service role client)
-  await supabaseAdmin
+  // Update order with Stripe session ID
+  await supabaseForOrders
     .from("orders")
     .update({ stripe_checkout_session_id: session.id })
     .eq("id", order.id);

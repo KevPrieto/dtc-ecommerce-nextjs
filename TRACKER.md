@@ -351,3 +351,73 @@
     - Professional and humble tone
   - File modified: components/layout/footer.tsx
 
+## Phase 15: Ecommerce Hardening & Portfolio-Grade Finish
+- [x] Fix checkout to work without service role key <!-- id: 68 --> [CRITICAL HOTFIX]
+  - Issue: Checkout throwing error when SUPABASE_SERVICE_ROLE_KEY not configured
+  - Problem: Hard error blocking all checkout attempts
+  - ✅ FIXED: Graceful fallback to regular client
+    - Updated checkout.ts to try service role, fallback to regular client
+    - Added console logging to track which client is used
+    - Created setup-rls-policies.sql script for Supabase configuration
+    - RLS policies allow authenticated and anonymous users to:
+      - INSERT orders (with their user_id or NULL for guests)
+      - INSERT order_items (linked to their orders)
+      - UPDATE orders (for Stripe session ID)
+      - SELECT their own orders and order_items
+    - Checkout now works with or without service role key
+  - Files modified: lib/actions/checkout.ts
+  - Files created: scripts/setup-rls-policies.sql
+- [x] Fix PDP 404 for existing products <!-- id: 63 --> [CRITICAL]
+  - Issue: /products/aloe-vera-gel-moisturizer returns 404
+  - Product exists in DB
+  - Unacceptable for ecommerce demo
+  - ✅ FIXED: Added generateStaticParams
+    - Added generateStaticParams to app/(shop)/products/[slug]/page.tsx
+    - Fetches all active products and generates static routes for each slug
+    - Works with ISR (revalidate = 60) for optimal performance
+    - All DB products now pre-rendered and accessible
+  - File modified: app/(shop)/products/[slug]/page.tsx
+- [x] Stabilize Supabase Service Role usage <!-- id: 64 --> [CRITICAL]
+  - Issue: [Supabase] Missing service role environment variables
+  - Problem: createServiceRoleClient throws hard error, no fallback, breaks checkout
+  - ✅ FIXED: Added graceful error handling
+    - Enhanced createServiceRoleClient with detailed error messages
+    - Shows specific missing env vars in error
+    - Wrapped service role usage in checkout.ts with try-catch
+    - User-friendly error: "Checkout system not fully configured"
+    - Logs error for debugging without exposing technical details
+  - Files modified: lib/supabase/server.ts, lib/actions/checkout.ts
+- [x] Reduce remaining navigation latency <!-- id: 65 --> [HIGH PRIORITY]
+  - Issue: Navigations still show perceptible delays
+  - ✅ OPTIMIZED: Added Next.js performance optimizations
+    - Added optimizePackageImports for lucide-react in next.config.ts
+    - Configured WebP image format for better performance
+    - All pages already have ISR (revalidate = 60) and React cache
+    - generateStaticParams ensures product pages are pre-rendered
+  - File modified: next.config.ts
+- [x] Add favicon and app icon <!-- id: 66 -->
+  - Issue: Tab without icon → amateur signal
+  - ✅ COMPLETED: Premium nature-inspired icon created
+    - Created app/icon.tsx (generates 32x32 icon programmatically)
+    - Created app/apple-icon.tsx (generates 180x180 icon for iOS)
+    - Design: Stylish serif "V" in sage green (#557a5f) with botanical leaf accents
+    - Background: Subtle gradient (warm off-white to pure white)
+    - Nature-style: Leaf shapes using border-radius, earthy color palette
+    - Premium feel: Georgia serif font, elegant letterform, minimal composition
+    - Apple icon includes decorative circle and multiple leaf accents
+    - Uses Next.js ImageResponse API (edge runtime)
+    - Auto-detected by Next.js App Router (no manual metadata config needed)
+  - Files created: app/icon.tsx, app/apple-icon.tsx
+  - File modified: app/layout.tsx
+- [x] Tone down hero animations <!-- id: 67 -->
+  - Issue: Current animations may feel "Dribbble-ish", not aligned with "clinical/calm/premium"
+  - ✅ SIMPLIFIED: Removed excessive animations
+    - Removed word-by-word staggered animations (0.1s-0.6s delays)
+    - Removed gradient glow hover effect on "works."
+    - Removed individual word hover effects (lift, color shift, shadow)
+    - Removed subtle-pulse animation on CTA button
+    - Kept single fade-in animation on entire content block (0.2s delay)
+    - Hero now feels calm, confident, and premium
+    - Converted back to Server Component (removed "use client")
+  - Files modified: components/home/hero-section.tsx, styles/globals.css
+

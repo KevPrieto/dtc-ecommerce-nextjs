@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "VÉRA",
-  description: "Science-led skincare essentials",
+  title: {
+    default: "VÉRA",
+    template: "%s | VÉRA",
+  },
+  description: "Science-led skincare essentials. Clinical formulations designed for measurable results.",
 };
 
 export default function RootLayout({
