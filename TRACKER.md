@@ -298,3 +298,56 @@
 - [x] Ensure correct rendering in all relevant sections (homepage, collections, PDP) <!-- id: 57 -->
 - [x] Map newly added Mineral Sunscreen image (User Request)
 
+## Phase 14: Critical Performance & UX Fixes
+- [x] Fix Checkout RLS Permission Error (42501) <!-- id: 58 --> [CRITICAL]
+  - Error code 42501 = Postgres "insufficient privilege"
+  - Blocks all purchases during checkout payment process
+  - Issue: RLS policy blocking INSERT on orders/order_items tables
+  - ✅ FIXED: Added service role client to bypass RLS
+    - Created `createServiceRoleClient()` in lib/supabase/server.ts
+    - Uses SUPABASE_SERVICE_ROLE_KEY for elevated permissions
+    - Updated checkout.ts to use service role client for order operations
+    - Maintains regular client for product/variant queries (respects RLS)
+    - Guest checkout now works correctly with null user_id
+  - Files modified: lib/actions/checkout.ts, lib/supabase/server.ts
+- [x] Optimize Page Navigation Performance (3162ms) <!-- id: 59 --> [HIGH PRIORITY]
+  - Problem: Extremely slow page navigation, ~3162ms GET requests
+  - Affects all product clicks and page transitions
+  - ✅ FIXED: Implemented React cache and ISR
+    - Wrapped all query functions with React's `cache()` for request deduplication
+    - Eliminated double query in product detail page (generateMetadata + page)
+    - Added `revalidate = 60` to all product pages and home page
+    - Enables Incremental Static Regeneration (ISR) with 60s cache
+    - Pages now pre-rendered/cached for much faster navigation
+  - Files modified: lib/queries/products.ts, app/(shop)/products/page.tsx, app/(shop)/products/[slug]/page.tsx, app/page.tsx
+- [x] Fix Botanical Collection Empty Category <!-- id: 60 -->
+  - Problem: "View Botanical Collection" button shows no results
+  - Button redirects to /products?category=natural (empty)
+  - Root cause: Hardcoded products on homepage don't exist in DB
+  - ✅ FIXED: Updated CTAs to link to all products
+    - Changed "View Botanical Collection" to "View All Products" → /products
+    - Changed "View Clinical Collection" to "View All Products" → /products
+    - Removed non-existent category filters from homepage CTAs
+  - Files modified: components/home/natural-products-section.tsx, components/home/clinical-products-section.tsx
+- [x] Enhance Hero Section Typography with Premium Animations <!-- id: 61 -->
+  - Goal: Letters must feel impactful and premium
+  - Hero headline needs animations and hover effects
+  - Must stop the scroll - €10K quality standard
+  - ✅ IMPLEMENTED: Premium word-by-word animations
+    - Staggered fade-in-up animation for each word (0.1s-0.6s delays)
+    - Individual word hover effects: lift, color shift, subtle shadow
+    - Gradient glow on final word "works." on group hover
+    - Fade-in animations for subtitle and CTAs
+    - Subtle pulse animation on primary CTA button
+    - All transitions use premium cubic-bezier easing
+  - Files modified: components/home/hero-section.tsx, styles/globals.css
+- [x] Add Portfolio Attribution Footer Disclaimer <!-- id: 62 -->
+  - Add text: "This is a fictitious brand created by Kevin to showcase his skills. This is a model that demonstrates how I can take your products to the digital market in the best way possible."
+  - ✅ ADDED: Portfolio disclaimer in footer
+    - Added below copyright line with subtle styling
+    - Text in muted color (text-muted-foreground/60)
+    - Italic font for visual differentiation
+    - Max-width for readability
+    - Professional and humble tone
+  - File modified: components/layout/footer.tsx
+

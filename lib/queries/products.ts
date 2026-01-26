@@ -1,9 +1,10 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { ProductWithVariants } from "@/types";
 
-export async function getProducts(
+export const getProducts = cache(async (
   category?: string
-): Promise<ProductWithVariants[]> {
+): Promise<ProductWithVariants[]> => {
   const supabase = await createClient();
 
   let query = supabase
@@ -28,11 +29,11 @@ export async function getProducts(
     return [];
   }
   return (data as ProductWithVariants[]) || [];
-}
+});
 
-export async function getProductBySlug(
+export const getProductBySlug = cache(async (
   slug: string
-): Promise<ProductWithVariants | null> {
+): Promise<ProductWithVariants | null> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -49,11 +50,11 @@ export async function getProductBySlug(
 
   if (error) return null;
   return data as ProductWithVariants;
-}
+});
 
-export async function getFeaturedProducts(
+export const getFeaturedProducts = cache(async (
   limit = 4
-): Promise<ProductWithVariants[]> {
+): Promise<ProductWithVariants[]> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -73,9 +74,9 @@ export async function getFeaturedProducts(
     return [];
   }
   return (data as ProductWithVariants[]) || [];
-}
+});
 
-export async function getCategories(): Promise<string[]> {
+export const getCategories = cache(async (): Promise<string[]> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -90,4 +91,4 @@ export async function getCategories(): Promise<string[]> {
 
   const categories = [...new Set(data?.map((p) => p.category) || [])];
   return categories;
-}
+});

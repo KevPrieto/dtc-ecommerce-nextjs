@@ -35,8 +35,11 @@ export function Footer() {
             </Link>
           </nav>
 
-          <div className="text-xs text-muted-foreground">
-            © {currentYear} VÉRA. All rights reserved.
+          <div className="text-xs text-muted-foreground space-y-3">
+            <p>© {currentYear} VÉRA. All rights reserved.</p>
+            <p className="text-muted-foreground/60 italic max-w-2xl">
+              This is a fictitious brand created by Kevin to showcase his skills. This is a model that demonstrates how I can take your products to the digital market in the best way possible.
+            </p>
           </div>
         </div>
       </div>

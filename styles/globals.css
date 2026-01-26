@@ -141,4 +141,14 @@
       animation: none;
     }
   }
+
+  .hero-headline span {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-headline span:hover {
+    transform: translateY(-2px);
+    color: hsl(var(--primary));
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 }

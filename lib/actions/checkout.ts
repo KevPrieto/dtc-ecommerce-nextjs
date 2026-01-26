@@ -1,7 +1,7 @@
 "use server";
 
 import Stripe from "stripe";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 import { CartItem } from "@/types";
 
 // Lazy initialization to prevent build errors when env vars are missing
@@ -91,8 +91,11 @@ const productById = new Map(products.map(p => [p.id, p]));
     0
   );
 
+  // Use service role client to bypass RLS for order creation
+  const supabaseAdmin = createServiceRoleClient();
+
   // Create pending order
-  const { data: order, error: orderError } = await supabase
+  const { data: order, error: orderError } = await supabaseAdmin
     .from("orders")
     .insert({
       user_id: user?.id || null,
@@ -106,7 +109,7 @@ const productById = new Map(products.map(p => [p.id, p]));
   if (orderError) throw orderError;
 
   // Insert order items with denormalized data
-  await supabase.from("order_items").insert(
+  await supabaseAdmin.from("order_items").insert(
     items.map((item) => {
       const variant = variants.find((v) => v.id === item.variantId)!;
       const product = productById.get(variant.product_id);
@@ -139,8 +142,8 @@ const productById = new Map(products.map(p => [p.id, p]));
     },
   });
 
-  // Update order with Stripe session ID
-  await supabase
+  // Update order with Stripe session ID (use service role client)
+  await supabaseAdmin
     .from("orders")
     .update({ stripe_checkout_session_id: session.id })
     .eq("id", order.id);

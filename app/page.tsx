@@ -6,6 +6,8 @@ import { BrandStory } from "@/components/home/brand-story";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
+export const revalidate = 60;
+
 export default function HomePage() {
   return (
     <>

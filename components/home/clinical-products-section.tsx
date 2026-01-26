@@ -130,8 +130,8 @@ export function ClinicalProductsSection() {
                 {/* View All CTA */}
                 <div className="text-center mt-12">
                     <Button asChild variant="outline" size="lg">
-                        <Link href="/products?category=clinical">
-                            View Clinical Collection
+                        <Link href="/products">
+                            View All Products
                         </Link>
                     </Button>
                 </div>

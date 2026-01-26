@@ -155,8 +155,8 @@ export function NaturalProductsSection() {
                 {/* View All CTA */}
                 <div className="text-center mt-12">
                     <Button asChild variant="outline" size="lg" className="border-accent/30 hover:border-accent">
-                        <Link href="/products?category=natural">
-                            View Botanical Collection
+                        <Link href="/products">
+                            View All Products
                         </Link>
                     </Button>
                 </div>
