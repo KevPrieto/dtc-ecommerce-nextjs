@@ -3,98 +3,166 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
-// Lazy initialization to prevent build errors when env vars are missing
+/**
+ * Stripe client (lazy, safe for build)
+ */
 function getStripe() {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) {
     throw new Error("STRIPE_SECRET_KEY not configured");
   }
+
   return new Stripe(secretKey, {
     apiVersion: "2025-12-15.clover",
   });
 }
 
+/**
+ * Supabase service role client (required for webhook writes)
+ */
 function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+
   if (!supabaseUrl || !serviceRoleKey) {
     throw new Error("Supabase environment variables not configured");
   }
-  return createClient(supabaseUrl, serviceRoleKey);
+
+  if (!/^https?:\/\//.test(supabaseUrl)) {
+    throw new Error(
+      `Invalid NEXT_PUBLIC_SUPABASE_URL: "${supabaseUrl}". Must include https://`
+    );
+  }
+
+  return createClient(supabaseUrl, serviceRoleKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
 }
 
 export async function POST(request: Request) {
-  // Check if Stripe is configured
+  // Init Stripe
   let stripe: Stripe;
   try {
     stripe = getStripe();
-  } catch {
-    console.error("[Stripe Webhook] Stripe not configured");
-    return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
+  } catch (error) {
+    console.error("[Stripe Webhook] Stripe not configured:", error);
+    return NextResponse.json(
+      { error: "Stripe not configured" },
+      { status: 503 }
+    );
   }
 
+  // Init Supabase
   let supabase;
   try {
     supabase = getSupabase();
-  } catch {
-    console.error("[Stripe Webhook] Supabase not configured");
-    return NextResponse.json({ error: "Database not configured" }, { status: 503 });
+  } catch (error) {
+    console.error("[Stripe Webhook] Supabase not configured:", error);
+    return NextResponse.json(
+      { error: "Database not configured" },
+      { status: 503 }
+    );
   }
 
   const body = await request.text();
   const headersList = await headers();
   const signature = headersList.get("stripe-signature");
 
+
   if (!signature) {
-    return NextResponse.json({ error: "No signature" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing Stripe signature" },
+      { status: 400 }
+    );
   }
 
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!webhookSecret) {
-    return NextResponse.json({ error: "Webhook secret not configured" }, { status: 503 });
+    console.error("[Stripe Webhook] STRIPE_WEBHOOK_SECRET missing");
+    return NextResponse.json(
+      { error: "Webhook secret not configured" },
+      { status: 503 }
+    );
   }
 
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      webhookSecret
+    );
   } catch (err) {
-    console.error("Webhook signature verification failed:", err);
-    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    console.error("[Stripe Webhook] Signature verification failed:", err);
+    return NextResponse.json(
+      { error: "Invalid signature" },
+      { status: 400 }
+    );
   }
 
+  /**
+   * Handle checkout completion
+   */
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const orderId = session.metadata?.order_id;
 
-    if (orderId) {
-      // Update order status to paid
-      const { error: updateError } = await supabase
-        .from("orders")
-        .update({
-          status: "paid",
-          email: session.customer_email || session.customer_details?.email,
-          stripe_payment_intent_id: session.payment_intent as string,
-        })
-        .eq("id", orderId);
+    if (!orderId) {
+      console.warn("[Stripe Webhook] checkout.session.completed without order_id");
+      return NextResponse.json({ received: true });
+    }
 
-      if (updateError) {
-        console.error("Error updating order:", updateError);
-      }
+    // Mark order as paid
+    const { error: orderError } = await supabase
+      .from("orders")
+      .update({
+        status: "paid",
+        email: session.customer_email ?? session.customer_details?.email ?? null,
+        stripe_payment_intent_id: session.payment_intent as string,
+      })
+      .eq("id", orderId);
 
-      // Decrement stock for each order item
-      const { data: orderItems } = await supabase
-        .from("order_items")
-        .select("product_variant_id, quantity")
-        .eq("order_id", orderId);
+    if (orderError) {
+      console.error("[Stripe Webhook] Failed to update order:", orderError);
+      return NextResponse.json(
+        { error: "Failed to update order" },
+        { status: 500 }
+      );
+    }
 
-      if (orderItems) {
-        for (const item of orderItems) {
-          await supabase.rpc("decrement_stock", {
-            p_variant_id: item.product_variant_id,
-            p_quantity: item.quantity,
-          });
+    // Fetch order items
+    const { data: orderItems, error: itemsError } = await supabase
+      .from("order_items")
+      .select("product_variant_id, quantity")
+      .eq("order_id", orderId);
+
+    if (itemsError) {
+      console.error("[Stripe Webhook] Failed to fetch order items:", itemsError);
+      return NextResponse.json(
+        { error: "Failed to fetch order items" },
+        { status: 500 }
+      );
+    }
+
+    // Decrement stock (best-effort)
+    for (const item of orderItems ?? []) {
+      const { error: stockError } = await supabase.rpc(
+        "decrement_stock",
+        {
+          p_variant_id: item.product_variant_id,
+          p_quantity: item.quantity,
         }
+      );
+
+      if (stockError) {
+        console.error(
+          "[Stripe Webhook] Stock decrement failed:",
+          stockError
+        );
       }
     }
   }
