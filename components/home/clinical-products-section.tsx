@@ -51,7 +51,7 @@ const CLINICAL_PRODUCTS = [
         slug: "mineral-sunscreen-spf50",
         category: "Sun Protection",
         price: "€36",
-        image: null,
+        image: "/products/mineral-sunscreen-spf50.png",
     },
 ];
 

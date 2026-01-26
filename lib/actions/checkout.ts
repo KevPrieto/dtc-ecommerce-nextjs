@@ -32,10 +32,31 @@ export async function createCheckoutSession(items: CartItem[]) {
 
   // Verify stock and get current prices from database
   const variantIds = items.map((i) => i.variantId);
-  const { data: variants } = await supabase
-    .from("product_variants")
-    .select("*, product:products(*)")
-    .in("id", variantIds);
+  // 1. Fetch variants ONLY
+const { data: variants } = await supabase
+  .from("product_variants")
+  .select("*")
+  .in("id", variantIds);
+
+if (!variants || variants.length !== items.length) {
+  throw new Error("Some products are no longer available");
+}
+
+// 2. Fetch products separately
+const productIds = [...new Set(variants.map(v => v.product_id))];
+
+const { data: products } = await supabase
+  .from("products")
+  .select("id, name, image_url")
+  .in("id", productIds);
+
+if (!products) {
+  throw new Error("Failed to load products");
+}
+
+// 3. Build lookup map
+const productById = new Map(products.map(p => [p.id, p]));
+
 
   if (!variants || variants.length !== items.length) {
     throw new Error("Some products are no longer available");
@@ -47,14 +68,15 @@ export async function createCheckoutSession(items: CartItem[]) {
       const variant = variants.find((v) => v.id === item.variantId);
       if (!variant) throw new Error(`Variant ${item.variantId} not found`);
 
+      const product = productById.get(variant.product_id);
+      if (!product) throw new Error(`Product ${variant.product_id} not found`);
+
       return {
         price_data: {
           currency: "eur",
           product_data: {
-            name: `${variant.product.name} - ${variant.name}`,
-            images: variant.product.image_url
-              ? [variant.product.image_url]
-              : [],
+            name: `${product.name} - ${variant.name}`,
+            images: product.image_url ? [product.image_url] : [],
           },
           unit_amount: variant.price,
         },
@@ -87,10 +109,13 @@ export async function createCheckoutSession(items: CartItem[]) {
   await supabase.from("order_items").insert(
     items.map((item) => {
       const variant = variants.find((v) => v.id === item.variantId)!;
+      const product = productById.get(variant.product_id);
+      if (!product) throw new Error(`Product ${variant.product_id} not found`);
+
       return {
         order_id: order.id,
         product_variant_id: item.variantId,
-        product_name: variant.product.name,
+        product_name: product.name,
         variant_name: variant.name,
         quantity: item.quantity,
         price: variant.price,

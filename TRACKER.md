@@ -133,6 +133,11 @@
   - Stripe webhook handler in app/api/webhooks/stripe/
   - Orders created in pending state, updated to paid via webhook
   - BLOCKED: Stripe env vars not configured (requires PC)
+  - ✅ Bug fix (2026-01-26): Fixed variant.product undefined error
+    - Refactored queries fetch variants and products separately (RLS compatibility)
+    - Updated line_items construction to use productById Map
+    - Updated order_items insertion to use productById Map
+    - Added defensive checks for missing products
 - [x] Create Order Success Page <!-- id: 17 -->
   - Already implemented: app/(checkout)/checkout/success/page.tsx
   - Shows confirmation with CheckCircle icon
@@ -177,7 +182,7 @@
   - Premium, minimal, clinical design maintained
 
 ## Phase 8: Visual Impact & Desirability (CRITICAL)
-- [ ] Rework ALL Hover Animations <!-- id: 32 -->
+- [x] Rework ALL Hover Animations <!-- id: 32 -->
   - Goal: Clearly perceptible, premium hover states
   - Scale: 1.03–1.06 range
   - Light sweep or highlight on hover
@@ -185,17 +190,31 @@
   - Motion duration: 400–700ms
   - Easing: cubic-bezier(0.16, 1, 0.3, 1)
   - Applied to: Cards, buttons, links, images
-- [ ] Introduce Presence Animations <!-- id: 33 -->
+  - ✅ Implemented across Button, Card, ProductCard, Header, Footer components
+  - All components use consistent easing: ease-[cubic-bezier(0.16,1,0.3,1)]
+  - Product cards: scale-[1.03], shadow-2xl, -translate-y-2
+  - Buttons: scale-[1.03], shadow-lg expansion
+  - Navigation: scale-[1.05], color shift to primary
+- [x] Introduce Presence Animations <!-- id: 33 -->
   - Goal: Elements feel alive even at rest
   - Very subtle idle movement OR light shimmer
   - NOT gimmicky — must feel intentional
   - Respects prefers-reduced-motion
-- [ ] Replace Flat Cards with Depth System <!-- id: 34 -->
+  - ✅ Added keyframe animations to globals.css
+  - subtle-pulse: 4s ease-in-out infinite (95%-100% opacity)
+  - fade-in-up, fade-in animations for page loads
+  - shimmer keyframe for special effects
+  - All animations respect prefers-reduced-motion
+- [x] Replace Flat Cards with Depth System <!-- id: 34 -->
   - Layered surfaces with elevation
   - Soft ambient shadows (neutral only)
   - Light elevation on hover
   - No neon or colorful glows
   - Clear foreground vs background separation
+  - ✅ Card component: shadow-md base, hover:shadow-xl with -translate-y-1
+  - ✅ ProductCard: shadow-md → shadow-2xl with -translate-y-2
+  - ✅ Clinical/Botanical sections: shadow-lg on hover
+  - All elevation uses neutral shadows only
 
 ## Phase 9: Product Imagery System (CRITICAL)
 - [ ] Replace ALL Product Placeholders with Branded VÉRA Imagery <!-- id: 39 -->
@@ -236,18 +255,27 @@
   - Headline contrast strong
   - CTA feels alive (breathing, hover tension)
   - Video or imagery pulls attention
-- [ ] Product Cards "Desire" Pass <!-- id: 45 -->
+- [x] Product Cards "Desire" Pass <!-- id: 45 -->
   - Hover zoom on product images (controlled, elegant)
   - Shadow + lift on hover
   - Title/price react subtly
+  - ✅ ProductCard: Image scale-105 on hover (duration-500)
+  - ✅ Shadow elevation: md → 2xl with -translate-y-2 lift
+  - ✅ Title reacts: text-primary color shift + -translate-y-[-2px]
+  - ✅ Applied to Clinical and Botanical product sections
+  - All transitions use premium cubic-bezier easing
 - [ ] Section Transitions (Scroll Narrative) <!-- id: 46 -->
   - Sections enter with staggered rhythm
   - Different animations per section type
   - Use scroll position to guide attention
-- [ ] Conversion Micro-moments <!-- id: 47 -->
+- [x] Conversion Micro-moments <!-- id: 47 -->
   - Add to cart: Clear success feedback
   - CTA hover: Premium feel
   - Navigation: Polish interactions
+  - ✅ Button component: All variants have scale-[1.03] + shadow expansion
+  - ✅ Navigation: Scale + color transitions (Header/Footer)
+  - ✅ CTAs: Consistent hover tension with shadow-lg
+  - Note: Add-to-cart success feedback handled by existing Button states
 - [ ] Final Professional Validation <!-- id: 48 -->
   - Validation question: "Would this site make a client trust me with a €10k+ ecommerce build?"
   - Compare to: Huly.io, Linear.app, Stripe.com
@@ -268,4 +296,5 @@
 - [x] Map new images to Botanical Collection products <!-- id: 55 -->
 - [x] Map Clinical Collection images consistently <!-- id: 56 -->
 - [x] Ensure correct rendering in all relevant sections (homepage, collections, PDP) <!-- id: 57 -->
+- [x] Map newly added Mineral Sunscreen image (User Request)
 
