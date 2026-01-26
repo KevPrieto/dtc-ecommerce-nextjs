@@ -18,7 +18,7 @@ export function ProductCard({ product }: ProductCardProps) {
       href={`/products/${product.slug}`}
       className="group block transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
     >
-      <div className="aspect-square relative bg-muted overflow-hidden rounded-lg transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:shadow-xl">
+      <div className="aspect-square relative bg-muted overflow-hidden rounded-lg shadow-md transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:shadow-2xl group-hover:-translate-y-2">
         {product.image_url ? (
           <Image
             src={product.image_url}

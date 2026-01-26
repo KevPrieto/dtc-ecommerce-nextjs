@@ -16,8 +16,8 @@ export function CartItem({ item }: CartItemProps) {
   const { updateQuantity, removeItem } = useCartStore();
 
   return (
-    <div className="flex gap-4">
-      <div className="w-20 h-20 relative bg-muted rounded overflow-hidden flex-shrink-0">
+    <div className="flex gap-4 p-4 rounded-lg border bg-card shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-md">
+      <div className="w-20 h-20 relative bg-muted rounded overflow-hidden flex-shrink-0 shadow-sm">
         {item.imageUrl ? (
           <Image
             src={item.imageUrl}
