@@ -12,7 +12,7 @@ const NATURAL_PRODUCTS = [
         slug: "rose-petal-cleansing-milk",
         category: "Cleanser",
         price: "€34",
-        image: null,
+        image: "/products/rosepetal-cleansing-milk.png",
         keyIngredient: "Rosa Damascena",
     },
     {
@@ -21,7 +21,7 @@ const NATURAL_PRODUCTS = [
         slug: "chamomile-calming-toner",
         category: "Toner",
         price: "€29",
-        image: null,
+        image: "/products/chamomile-calming-toner.png",
         keyIngredient: "Chamomilla Recutita",
     },
     {
@@ -30,7 +30,7 @@ const NATURAL_PRODUCTS = [
         slug: "bakuchiol-renewal-serum",
         category: "Serum",
         price: "€52",
-        image: null,
+        image: "/products/bakuchiol-renewal-serum.png",
         keyIngredient: "Bakuchiol (Retinol Alternative)",
     },
     {
@@ -39,7 +39,7 @@ const NATURAL_PRODUCTS = [
         slug: "squalane-rosehip-oil",
         category: "Oil",
         price: "€44",
-        image: null,
+        image: "/products/squalane-rosehip-oil.png",
         keyIngredient: "Rosa Rubiginosa",
     },
     {
@@ -48,7 +48,7 @@ const NATURAL_PRODUCTS = [
         slug: "aloe-vera-gel-moisturizer",
         category: "Moisturizer",
         price: "€36",
-        image: null,
+        image: "/products/aloevera-gel-moisturizer.png",
         keyIngredient: "Aloe Barbadensis",
     },
     {
@@ -57,7 +57,7 @@ const NATURAL_PRODUCTS = [
         slug: "green-tea-antioxidant-mist",
         category: "Mist",
         price: "€26",
-        image: null,
+        image: "/products/green-tea-antioxidant-mist.png",
         keyIngredient: "Camellia Sinensis",
     },
 ];

@@ -11,7 +11,7 @@ const CLINICAL_PRODUCTS = [
         slug: "gentle-cleansing-gel",
         category: "Cleanser",
         price: "€28",
-        image: null, // Placeholder
+        image: "/products/gentle-cleansing-gel.png",
     },
     {
         id: "clinical-2",
@@ -19,7 +19,7 @@ const CLINICAL_PRODUCTS = [
         slug: "hydrating-essence",
         category: "Treatment",
         price: "€32",
-        image: null,
+        image: "/products/hydrating-essence.png",
     },
     {
         id: "clinical-3",
@@ -27,7 +27,7 @@ const CLINICAL_PRODUCTS = [
         slug: "hyaluronic-serum",
         category: "Serum",
         price: "€45",
-        image: null,
+        image: "/products/hyaluronic-serum.png",
     },
     {
         id: "clinical-4",
@@ -35,7 +35,7 @@ const CLINICAL_PRODUCTS = [
         slug: "vitamin-c-serum",
         category: "Serum",
         price: "€48",
-        image: null,
+        image: "/products/vitamin-c-serum.png",
     },
     {
         id: "clinical-5",
@@ -43,7 +43,7 @@ const CLINICAL_PRODUCTS = [
         slug: "daily-moisturizer",
         category: "Moisturizer",
         price: "€38",
-        image: null,
+        image: "/products/daily-moisturizer.png",
     },
     {
         id: "clinical-6",
