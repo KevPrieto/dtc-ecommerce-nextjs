@@ -420,4 +420,18 @@
     - Hero now feels calm, confident, and premium
     - Converted back to Server Component (removed "use client")
   - Files modified: components/home/hero-section.tsx, styles/globals.css
+- [x] Refine Hero Background Video Implementation <!-- id: 69 -->
+  - Goal: True background video with proper overlay and text contrast
+  - ✅ UPDATED: Hero video implementation refinements
+    - Changed video source from /videos/hero.mp4 to /videos/Minimalist_Skincare_Brand_Video.mp4
+    - Removed opacity-50 from video element (no opacity on video itself)
+    - Updated overlay from bg-black/10 to bg-black/25 for better text readability
+    - Added z-10 to overlay for proper layering
+    - Updated text colors: h1 to text-white, p to text-white/90
+    - Updated outline button: bg-white/10 text-white border-white/30 hover:bg-white/20
+    - Added preload="auto" and aria-hidden="true" to video element
+    - Video now serves as true background (video → overlay → content)
+    - Maintains autoPlay, loop, muted, playsInline for Mobile Safari compatibility
+    - Graceful fallback to bg-secondary if video fails to load
+  - File modified: components/home/hero-section.tsx
 
