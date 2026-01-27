@@ -1,24 +1,28 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getProductBySlug, getProductSlugsForBuild } from "@/lib/queries/products";
+import {
+  getProductBySlug,
+  getProductSlugsForBuild,
+} from "@/lib/queries/products";
 import { ProductDetails } from "@/components/product/product-details";
 
 interface ProductPageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export const revalidate = 60;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  // Use build-safe function that doesn't require cookies
   return await getProductSlugsForBuild();
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
-  const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const product = await getProductBySlug(params.slug);
 
-  if (!product) return { title: "Product Not Found | VÉRA" };
+  if (!product) {
+    return { title: "Product Not Found | VÉRA" };
+  }
 
   return {
     title: `${product.name} | VÉRA`,
@@ -27,8 +31,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const product = await getProductBySlug(params.slug);
 
   if (!product) {
     notFound();
