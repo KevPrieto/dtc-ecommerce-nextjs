@@ -367,6 +367,33 @@
   - File modified: components/layout/footer.tsx
 
 ## Phase 15: Ecommerce Hardening & Portfolio-Grade Finish
+- [x] Fix Next.js 15 async params for Vercel deployment <!-- id: 72 --> [CRITICAL FIX]
+  - Issue: Vercel build failing with TypeScript error in product page
+  - Error: `Type '{ slug: string }' is missing properties: then, catch, finally`
+  - Root cause: Next.js 15 breaking change - dynamic route params must be Promise
+  - ✅ FIXED: Updated product page to await params
+  - Changed interface: `params: { slug: string }` → `params: Promise<{ slug: string }>`
+  - Updated both `generateMetadata()` and `ProductPage()` to `await params`
+  - Build now succeeds: 16 product pages generated successfully
+  - File modified: app/(shop)/products/[slug]/page.tsx
+- [x] Add debug logging for Botanical Collection display <!-- id: 73 -->
+  - Issue: Only 4 of 6 botanical products showing on homepage
+  - Products exist in database and routes work (no 404s)
+  - ✅ ADDED: Console logging to diagnose query results
+  - Logs: Expected vs received product counts, slug comparison
+  - Next step: Check production database to verify all 6 products seeded
+  - File modified: components/home/natural-products-section.tsx
+- [x] Center footer content and refine portfolio disclaimer <!-- id: 74 -->
+  - Issue A: Footer content was left-aligned instead of centered
+  - Issue B: Portfolio disclaimer text was too verbose and casual
+  - ✅ FIXED: Added `items-center text-center` to footer container
+  - ✅ FIXED: Added `justify-center` to navigation links
+  - ✅ REFINED: Replaced disclaimer with elegant, professional text
+  - New text: "A portfolio project by Kevin Prieto showcasing contemporary digital commerce design and development."
+  - Maintains premium brand aesthetic while being clear and concise
+  - File modified: components/layout/footer.tsx
+
+## Phase 15: Ecommerce Hardening & Portfolio-Grade Finish (continued)
 - [x] Fix checkout to work without service role key <!-- id: 68 --> [CRITICAL HOTFIX]
   - Issue: Checkout throwing error when SUPABASE_SERVICE_ROLE_KEY not configured
   - Problem: Hard error blocking all checkout attempts

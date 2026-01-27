@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="border-t">
       <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 items-center text-center">
           <div>
             <h3 className="text-lg font-semibold tracking-tight">VÉRA</h3>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -14,7 +14,7 @@ export function Footer() {
             </p>
           </div>
 
-          <nav className="flex flex-wrap gap-6">
+          <nav className="flex flex-wrap gap-6 justify-center">
             <Link
               href="/shipping"
               className="text-sm text-muted-foreground transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-foreground hover:translate-x-1"
@@ -38,7 +38,7 @@ export function Footer() {
           <div className="text-xs text-muted-foreground space-y-3">
             <p>© {currentYear} VÉRA. All rights reserved.</p>
             <p className="text-muted-foreground/60 italic max-w-2xl">
-              This is a fictitious brand created by Kevin to showcase his skills. This is a model that demonstrates how I can take your products to the digital market in the best way possible.
+              A portfolio project by Kevin Prieto showcasing contemporary digital commerce design and development.
             </p>
           </div>
         </div>

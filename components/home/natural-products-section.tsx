@@ -34,6 +34,12 @@ export async function NaturalProductsSection() {
     // Fetch products from database
     const products = await getProductsBySlugs(NATURAL_PRODUCT_SLUGS);
 
+    // Debug logging
+    console.log("[NaturalProductsSection] Expected:", NATURAL_PRODUCT_SLUGS.length, "products");
+    console.log("[NaturalProductsSection] Received:", products.length, "products");
+    console.log("[NaturalProductsSection] Requested slugs:", NATURAL_PRODUCT_SLUGS);
+    console.log("[NaturalProductsSection] Returned slugs:", products.map(p => p.slug));
+
     // Return null if no products found
     if (products.length === 0) {
         return null;
