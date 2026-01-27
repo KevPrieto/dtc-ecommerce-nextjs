@@ -120,6 +120,35 @@ export const getFeaturedProducts = cache(async (
 });
 
 /**
+ * Fetch products by an array of slugs.
+ * Used for homepage product sections (Clinical, Botanical).
+ */
+export const getProductsBySlugs = cache(async (
+  slugs: string[]
+): Promise<ProductWithVariants[]> => {
+  const supabase = getSupabase();
+
+  const { data, error } = await supabase
+    .from("products")
+    .select(`*, variants:product_variants(*)`)
+    .in("slug", slugs)
+    .eq("is_active", true);
+
+  if (error) {
+    console.error("[Products] Error fetching products by slugs:", {
+      slugs,
+      message: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint,
+    });
+    return [];
+  }
+
+  return (data as ProductWithVariants[]) || [];
+});
+
+/**
  * Fetch unique product categories.
  */
 export const getCategories = cache(async (): Promise<string[]> => {

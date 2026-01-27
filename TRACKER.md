@@ -286,11 +286,26 @@
 - [x] Integrate the hero video into the homepage Hero section <!-- id: 49 -->
 - [x] Ensure performance, autoplay muted, no audio, graceful fallback <!-- id: 50 -->
 - [x] Ensure it aligns with premium / clinical aesthetic <!-- id: 51 -->
+- [x] Fix: Correct video placement <!-- id: 70 --> [CRITICAL FIX]
+  - ✅ FIXED: Hero now uses /videos/hero.mp4 (was using Minimalist_Skincare_Brand_Video.mp4)
+  - ✅ FIXED: Added background video to "The VÉRA Standard" section using Minimalist_Skincare_Brand_Video.mp4
+  - Implementation: Both sections use same pattern (absolute video, overlay, white text)
+  - File modified: components/home/hero-section.tsx
+  - File modified: components/home/brand-story.tsx
 
 ### Group 2: Product Card Navigation Fix
-- [/] Fix product cards so ALL products correctly navigate to their PDP <!-- id: 52 -->
+- [x] Fix product cards so ALL products correctly navigate to their PDP <!-- id: 52 -->
 - [x] Verify slug usage, routing, and Link correctness <!-- id: 53 -->
-- [/] Validate navigation for Clinical + Botanical products <!-- id: 54 -->
+- [x] Validate navigation for Clinical + Botanical products <!-- id: 54 -->
+- [x] Fix 404 errors for Botanical Collection products <!-- id: 71 --> [CRITICAL FIX]
+  - Issue: Hardcoded product links causing 404s when products don't exist in DB
+  - Products affected: aloe-vera-gel-moisturizer, rose-petal-cleansing-milk, etc.
+  - ✅ FIXED: Converted product sections to database-driven
+  - Added getProductsBySlugs() query function to lib/queries/products.ts
+  - Converted ClinicalProductsSection to async Server Component
+  - Converted NaturalProductsSection to async Server Component
+  - Benefits: Self-healing (no 404s), only renders products that exist in DB
+  - Files modified: lib/queries/products.ts, components/home/clinical-products-section.tsx, components/home/natural-products-section.tsx
 
 ### Group 3: Product Image Mapping & Collections
 - [x] Map new images to Botanical Collection products <!-- id: 55 -->

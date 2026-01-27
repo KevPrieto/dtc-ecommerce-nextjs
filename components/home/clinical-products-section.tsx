@@ -1,61 +1,34 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { getProductsBySlugs } from "@/lib/queries/products";
 
-// Clinical product line - existing products
-const CLINICAL_PRODUCTS = [
-    {
-        id: "clinical-1",
-        name: "Gentle Cleansing Gel",
-        slug: "gentle-cleansing-gel",
-        category: "Cleanser",
-        price: "€28",
-        image: "/products/gentle-cleansing-gel.png",
-    },
-    {
-        id: "clinical-2",
-        name: "Hydrating Essence",
-        slug: "hydrating-essence",
-        category: "Treatment",
-        price: "€32",
-        image: "/products/hydrating-essence.png",
-    },
-    {
-        id: "clinical-3",
-        name: "Hyaluronic Serum",
-        slug: "hyaluronic-serum",
-        category: "Serum",
-        price: "€45",
-        image: "/products/hyaluronic-serum.png",
-    },
-    {
-        id: "clinical-4",
-        name: "Vitamin C Serum",
-        slug: "vitamin-c-serum",
-        category: "Serum",
-        price: "€48",
-        image: "/products/vitamin-c-serum.png",
-    },
-    {
-        id: "clinical-5",
-        name: "Daily Moisturizer",
-        slug: "daily-moisturizer",
-        category: "Moisturizer",
-        price: "€38",
-        image: "/products/daily-moisturizer.png",
-    },
-    {
-        id: "clinical-6",
-        name: "Mineral Sunscreen SPF 50",
-        slug: "mineral-sunscreen-spf50",
-        category: "Sun Protection",
-        price: "€36",
-        image: "/products/mineral-sunscreen-spf50.png",
-    },
+// Clinical product slugs to fetch from database
+const CLINICAL_PRODUCT_SLUGS = [
+    "gentle-cleansing-gel",
+    "hydrating-essence",
+    "hyaluronic-serum",
+    "vitamin-c-serum",
+    "daily-moisturizer",
+    "mineral-sunscreen-spf50",
 ];
 
-export function ClinicalProductsSection() {
+// Category mapping for display purposes
+const CATEGORY_DISPLAY: Record<string, string> = {
+    "cleansers": "Cleanser",
+    "treatments": "Treatment",
+    "moisturizers": "Moisturizer",
+    "sun-protection": "Sun Protection",
+};
+
+export async function ClinicalProductsSection() {
+    // Fetch products from database
+    const products = await getProductsBySlugs(CLINICAL_PRODUCT_SLUGS);
+
+    // Return null if no products found
+    if (products.length === 0) {
+        return null;
+    }
+
     return (
         <section className="py-24 bg-background">
             <div className="container mx-auto px-4">
@@ -75,56 +48,64 @@ export function ClinicalProductsSection() {
 
                 {/* Product Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                    {CLINICAL_PRODUCTS.map((product) => (
-                        <Link
-                            key={product.id}
-                            href={`/products/${product.slug}`}
-                            className="group block"
-                        >
-                            {/* Product Image Placeholder */}
-                            <div className="aspect-[3/4] relative bg-muted/50 rounded-lg overflow-hidden mb-4
-                            border border-border/50 transition-all duration-500
-                            group-hover:shadow-lg group-hover:border-border
-                            group-hover:scale-[1.02]">
-                                {product.image ? (
-                                    <img
-                                        src={product.image}
-                                        alt={product.name}
-                                        className="w-full h-full object-cover transition-transform duration-700
-                               group-hover:scale-110"
-                                    />
-                                ) : (
-                                    <div className="w-full h-full flex flex-col items-center justify-center p-4
-                                  bg-gradient-to-b from-neutral-100 to-neutral-50">
-                                        <div className="w-12 h-24 bg-gradient-to-b from-neutral-300 to-neutral-200 
-                                    rounded-t-full rounded-b-lg shadow-sm mb-3" />
-                                        <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider">
-                                            VÉRA
+                    {products.map((product) => {
+                        const lowestPrice = product.variants && product.variants.length > 0
+                            ? Math.min(...product.variants.map(v => v.price))
+                            : 0;
+                        const formattedPrice = `€${(lowestPrice / 100).toFixed(0)}`;
+                        const displayCategory = CATEGORY_DISPLAY[product.category] || product.category;
+
+                        return (
+                            <Link
+                                key={product.id}
+                                href={`/products/${product.slug}`}
+                                className="group block"
+                            >
+                                {/* Product Image */}
+                                <div className="aspect-[3/4] relative bg-muted/50 rounded-lg overflow-hidden mb-4
+                                border border-border/50 transition-all duration-500
+                                group-hover:shadow-lg group-hover:border-border
+                                group-hover:scale-[1.02]">
+                                    {product.image_url ? (
+                                        <img
+                                            src={product.image_url}
+                                            alt={product.name}
+                                            className="w-full h-full object-cover transition-transform duration-700
+                                   group-hover:scale-110"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex flex-col items-center justify-center p-4
+                                      bg-gradient-to-b from-neutral-100 to-neutral-50">
+                                            <div className="w-12 h-24 bg-gradient-to-b from-neutral-300 to-neutral-200
+                                        rounded-t-full rounded-b-lg shadow-sm mb-3" />
+                                            <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider">
+                                                VÉRA
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Category Badge */}
+                                    <div className="absolute top-3 left-3">
+                                        <span className="text-[10px] uppercase tracking-wider px-2 py-1
+                                       bg-background/90 backdrop-blur-sm rounded text-muted-foreground">
+                                            {displayCategory}
                                         </span>
                                     </div>
-                                )}
-
-                                {/* Category Badge */}
-                                <div className="absolute top-3 left-3">
-                                    <span className="text-[10px] uppercase tracking-wider px-2 py-1 
-                                   bg-background/90 backdrop-blur-sm rounded text-muted-foreground">
-                                        {product.category}
-                                    </span>
                                 </div>
-                            </div>
 
-                            {/* Product Info */}
-                            <div className="space-y-1">
-                                <h3 className="text-sm font-medium leading-tight group-hover:text-primary/80
-                               transition-colors duration-300">
-                                    {product.name}
-                                </h3>
-                                <p className="text-sm text-muted-foreground">
-                                    {product.price}
-                                </p>
-                            </div>
-                        </Link>
-                    ))}
+                                {/* Product Info */}
+                                <div className="space-y-1">
+                                    <h3 className="text-sm font-medium leading-tight group-hover:text-primary/80
+                                   transition-colors duration-300">
+                                        {product.name}
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        {formattedPrice}
+                                    </p>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
 
                 {/* View All CTA */}
